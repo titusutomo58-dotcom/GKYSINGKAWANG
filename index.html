@@ -1086,3 +1086,60 @@
   </script>
 </body>
 </html>
+<script>
+        // Paste kode 'async function simpanAnggota(event)' di sini
+        async function simpanAnggota(event) {
+            event.preventDefault();
+
+            const urlDatabase = "https://script.google.com/macros/s/AKfycbzEXT3EMcFAklpeeBFGm8VjLUaJieAj-IOXzTGmIf1wXEam7W1Mb_V7ZPphk2O5ikEzxw/exec";
+
+            const dataAnggota = {
+                action: "tambah_anggota",
+                id: "MEMBER-" + Math.floor(Math.random() * 10000),
+                nama: document.getElementById('m-name')?.value || "",
+                komisi: document.getElementById('m-commission')?.value || "",
+                tempat_lahir: document.getElementById('m-pob')?.value || "",
+                tgl_lahir: document.getElementById('m-dob')?.value || "",
+                telepon: document.getElementById('m-phone')?.value || "",
+                status: document.getElementById('m-status')?.value || ""
+            };
+
+            const tombol = event.target.querySelector('button[type="submit"]') || event.target.querySelector('button');
+            const teksAwal = tombol ? tombol.innerText : "Simpan Data";
+            
+            if (tombol) {
+                tombol.innerText = "Menyimpan...";
+                tombol.disabled = true;
+            }
+
+            try {
+                const kirim = await fetch(urlDatabase, {
+                    method: 'POST',
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify(dataAnggota)
+                });
+
+                const respon = await kirim.json();
+
+                if (respon.status === "success") {
+                    alert("Berhasil! Data telah masuk ke Google Sheets.");
+                    event.target.reset();
+                    if (typeof closeModal === 'function') {
+                        closeModal('member-modal');
+                    }
+                } else {
+                    alert("Gagal menyimpan: " + (respon.pesan || "Terjadi kesalahan server."));
+                }
+            } catch (error) {
+                console.error("Detail Error:", error);
+                alert("Gagal mengirim data. Pastikan koneksi internet menyala.");
+            } finally {
+                if (tombol) {
+                    tombol.innerText = teksAwal;
+                    tombol.disabled = false;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
