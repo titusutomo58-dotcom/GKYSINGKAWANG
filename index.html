@@ -184,8 +184,6 @@
       <button class="nav-link" data-view="qr-attendance-view" type="button"><i data-lucide="qr-code" class="w-4 h-4"></i><span>Absensi Scan QR</span></button> 
       <button class="nav-link" data-view="attendance-view" type="button"><i data-lucide="calendar-check" class="w-4 h-4"></i><span>Kehadiran</span></button> 
       <button class="nav-link" data-view="visits-view" type="button"><i data-lucide="clipboard-list" class="w-4 h-4"></i><span>Kunjungan Jemaat</span></button> 
-      <!-- MENU BARU: PENGINJILAN PRIBADI -->
-      <button class="nav-link" data-view="evangelism-view" type="button"><i data-lucide="book-open" class="w-4 h-4"></i><span>Penginjilan Pribadi</span></button> 
       <button class="nav-link" data-view="reports-view" type="button"><i data-lucide="bar-chart-3" class="w-4 h-4"></i><span>Laporan</span></button> 
       <button class="nav-link" data-view="settings-view" type="button"><i data-lucide="settings" class="w-4 h-4"></i><span>Pengaturan</span></button>
       <button class="nav-link text-red-300 hover:text-red-100" onclick="handleLogout()" type="button"><i data-lucide="log-out" class="w-4 h-4"></i><span>Keluar</span></button>
@@ -391,74 +389,7 @@
       </div>
      </section>
 
-     <!-- SECTION BARU: Penginjilan Pribadi (Evangelism) -->
-     <section id="evangelism-view" class="view">
-       <div class="panel mb-6">
-        <div class="flex justify-between gap-3 flex-wrap items-center">
-         <div>
-          <h2 class="panel-title">Penginjilan Pribadi (PI)</h2>
-          <p class="panel-sub">Catat dan pantau kegiatan penginjilan personal kepada jiwa baru.</p>
-         </div>
-         <button onclick="openModal('evangelism-modal')" class="primary" type="button" style="width: auto;">
-          <i data-lucide="plus" class="w-4 h-4"></i><span>Catat PI Baru</span>
-         </button>
-        </div>
-       </div>
-
-       <!-- Recap Section PI -->
-       <div class="panel mb-6">
-        <div class="flex justify-between gap-3 flex-wrap items-center border-b pb-3 mb-4">
-         <div>
-          <h3 class="font-bold text-slate-800 text-base">Rekapitulasi PI Bulanan</h3>
-          <p class="panel-sub">Daftar jiwa yang dijangkau pada periode yang dipilih.</p>
-         </div>
-         <div class="flex gap-2">
-          <select id="pi-month" class="field" style="width: auto;" onchange="renderEvangelism()">
-           <option value="0">Januari</option><option value="1">Februari</option><option value="2">Maret</option>
-           <option value="3">April</option><option value="4">Mei</option><option value="5">Juni</option>
-           <option value="6">Juli</option><option value="7">Agustus</option><option value="8">September</option>
-           <option value="9">Oktober</option><option value="10">November</option><option value="11">Desember</option>
-          </select>
-          <select id="pi-year" class="field" style="width: auto;" onchange="renderEvangelism()"></select>
-         </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-         <div class="p-3 bg-slate-50 border rounded-lg text-center">
-          <p class="text-xs text-slate-500 font-medium">Total PI Bulan Ini</p>
-          <strong id="pi-count" class="text-2xl text-slate-800 block mt-1">0</strong>
-         </div>
-         <div class="p-3 bg-slate-50 border rounded-lg text-center">
-          <p class="text-xs text-slate-500 font-medium">Jiwa Terjangkau</p>
-          <strong id="pi-unique" class="text-2xl text-indigo-600 block mt-1">0</strong>
-         </div>
-         <div class="p-3 bg-slate-50 border rounded-lg text-center">
-          <p class="text-xs text-slate-500 font-medium">Perlu Follow-Up</p>
-          <strong id="pi-followup-count" class="text-2xl text-red-600 block mt-1">0</strong>
-         </div>
-        </div>
-
-        <div class="table-wrap">
-         <table class="data-table">
-          <thead>
-           <tr>
-            <th>Nama Orang</th>
-            <th>Tanggal PI</th>
-            <th>Penginjil</th>
-            <th>Respon</th>
-            <th>Pokok Doa / Catatan</th>
-            <th>Status</th>
-            <th>Aksi</th>
-           </tr>
-          </thead>
-          <tbody id="evangelism-body"></tbody>
-         </table>
-        </div>
-        <p id="evangelism-empty" class="empty hidden">Tidak ada data penginjilan pada bulan dan tahun yang dipilih.</p>
-       </div>
-     </section>
-
-     <!-- Reports View -->
+     <!-- Reports View (Fitur Rekap Mingguan/Bulanan/Tahunan & Export) -->
      <section id="reports-view" class="view">
       <div class="panel mb-4">
        <h2 class="panel-title">Laporan Administrasi & Rekapitulasi</h2>
@@ -596,62 +527,6 @@
    </div>
   </div>
 
-  <!-- MODAL BARU: Input Penginjilan Pribadi -->
-  <div id="evangelism-modal" class="modal-layer" role="dialog">
-   <div class="modal">
-    <div class="modal-head">
-     <div>
-      <h2 id="modal-pi-title" class="serif text-xl m-0 font-bold text-slate-800">Catat Penginjilan Pribadi</h2>
-      <p class="panel-sub">Input data penjangkauan jiwa baru secara manual.</p>
-     </div>
-     <button class="close" onclick="closeModal('evangelism-modal')" type="button"><i data-lucide="x" class="w-4 h-4"></i></button>
-    </div>
-    <form id="evangelism-form" onsubmit="handleSaveEvangelism(event)">
-     <div class="form-grid">
-      <div class="form-group full">
-       <label>Nama Orang (Jiwa Baru)</label>
-       <!-- INPUT TEKS BEBAS, bukan select dropdown -->
-       <input id="pi-name" class="field" type="text" placeholder="Masukkan nama orang yang diinjili..." required>
-      </div>
-      <div class="form-group">
-       <label>Tanggal Penginjilan</label>
-       <input id="pi-date" class="field" type="date" required>
-      </div>
-      <div class="form-group">
-       <label>Penginjil / Pelayan</label>
-       <input id="pi-visitor" class="field" placeholder="Contoh: Pdt. Yohanes" required>
-      </div>
-      <div class="form-group">
-       <label>Kondisi / Respon</label>
-       <select id="pi-response" class="field">
-        <option value="Terbuka / Menerima">Terbuka / Menerima</option>
-        <option value="Ragu-ragu / Bertanya">Ragu-ragu / Bertanya</option>
-        <option value="Menolak / Tertutup">Menolak / Tertutup</option>
-        <option value="Lainnya">Lainnya</option>
-       </select>
-      </div>
-      <div class="form-group">
-       <label>Status Tindak Lanjut</label>
-       <select id="pi-status" class="field">
-        <option value="Tunggu Proses">Tunggu Proses</option>
-        <option value="Perlu Follow-up (Kunjungan Lagi)">Perlu Follow-up (Kunjungan Lagi)</option>
-        <option value="Diundang Ibadah">Diundang Ibadah</option>
-        <option value="Bergabung Komunitas">Bergabung Komunitas</option>
-       </select>
-      </div>
-      <div class="form-group full">
-       <label>Ringkasan Percakapan / Pokok Doa</label>
-       <textarea id="pi-notes" class="field textarea" placeholder="Ceritakan latar belakang jiwa dan apa yang perlu didoakan..."></textarea>
-      </div>
-     </div>
-     <div class="mt-4 flex justify-end gap-2">
-      <button class="secondary" onclick="closeModal('evangelism-modal')" type="button" style="width: auto;">Batal</button>
-      <button id="pi-save" class="primary" type="submit" style="width: auto;">Simpan Data PI</button>
-     </div>
-    </form>
-   </div>
-  </div>
-
   <!-- Modal QR Code Generator -->
   <div id="qr-modal" class="modal-layer" role="dialog">
    <div class="modal text-center">
@@ -677,7 +552,7 @@
    </div>
   </div>
 
-  <!-- Modal Tambah / Edit Anggota (Kode diperbaiki untuk menutup tag dengan benar) -->
+  <!-- Modal Tambah / Edit Anggota -->
   <div id="member-modal" class="modal-layer" role="dialog">
    <div class="modal">
     <div class="modal-head">
@@ -695,192 +570,576 @@
       <div class="form-group"><label>Tanggal Lahir</label><input id="m-dob" class="field" type="date"></div>
       <div class="form-group"><label>Nomor Telepon</label><input id="m-phone" class="field" type="tel" placeholder="08xxxxxxxxxx"></div>
       <div class="form-group">
-        <label>Status Keanggotaan</label>
-        <select id="m-status" class="field">
-          <option value="Jemaat">Jemaat</option>
-          <option value="Simpatisan">Simpatisan</option>
-          <option value="Tamu">Tamu</option>
-        </select>
-      </div>
-      <!-- MELENGKAPI KODE ANDA YANG TERPOTONG SEBELUMNYA -->
-      <div class="form-group full">
-        <label>Alamat Lengkap</label>
-        <textarea id="m-address" class="field textarea" placeholder="Alamat tempat tinggal..."></textarea>
-      </div>
+  <label>Status Keanggotaan</label>
+  <select id="m-status" class="field">
+    <option value="Jemaat">Jemaat</option>
+    <option value="Simpatisan">Simpatisan</option>
+    <option value="Tamu">Tamu</option>
+  </select>
+</div>
+      <div class="form-group full"><label>Alamat</label><textarea id="m-address" class="field textarea" placeholder="Alamat rumah jemaat"></textarea></div>
      </div>
      <div class="mt-4 flex justify-end gap-2">
       <button class="secondary" onclick="closeModal('member-modal')" type="button" style="width: auto;">Batal</button>
-      <button id="member-save" class="primary" type="submit" style="width: auto;">Simpan Data Anggota</button>
+      <button id="member-save" class="primary" type="submit" style="width: auto;">Simpan Anggota</button>
      </div>
     </form>
    </div>
   </div>
 
-  <!-- SCRIPT LOGIKA PENGINJILAN PRIBADI -->
+  <div id="toast" class="toast" role="status">
+   <i data-lucide="check-circle" class="w-4 h-4"></i><span id="toast-msg" style="color: #fff; font-weight: 700;">Perubahan berhasil disimpan.</span>
+  </div>
+
   <script>
-    // Memastikan function closeModal & openModal ada secara global (kalau belum di set up)
-    if(typeof window.openModal !== 'function') {
-        window.openModal = function(id) {
-            document.getElementById(id).classList.add('show');
-        }
-    }
-    if(typeof window.closeModal !== 'function') {
-        window.closeModal = function(id) {
-            document.getElementById(id).classList.remove('show');
-        }
-    }
+    const $ = id => document.getElementById(id);
+    const DEFAULT_COMMISSIONS = ["Anggota Jemaat","Komisi Remaja","Komisi Sekolah Minggu","Komisi Alpha Course","Komisi Wanita"];
+    
+    // Inisialisasi Data Default
+    let records = JSON.parse(localStorage.getItem('gky_records')) || [
+      { __backendId: 'm1', record_type: 'member', name: 'Budi Santoso', commission: 'Anggota Jemaat', pob: 'Singkawang', dob: '1988-05-12', phone: '08123456789', status: 'Aktif', address: 'Jl. Diponegoro No. 12' },
+      { __backendId: 'm2', record_type: 'member', name: 'Siti Rahma', commission: 'Komisi Wanita', pob: 'Singkawang', dob: '1992-08-20', phone: '08987654321', status: 'Aktif', address: 'Jl. Pasiran No. 45' }
+    ];
 
-    // --- LOGIKA UTAMA PENGINJILAN PRIBADI ---
-    let evangelismData = []; // Array simulasi database penginjilan
+    let editingRecord = null;
+    let editingVisitRecord = null;
+    let html5QrcodeScanner = null;
 
-    function initEvangelismFilters() {
-      const yearSelect = document.getElementById('pi-year');
-      const monthSelect = document.getElementById('pi-month');
-      if(!yearSelect || !monthSelect) return;
+    const saveData = () => {
+      localStorage.setItem('gky_records', JSON.stringify(records));
+      renderAll();
+    };
 
-      const currentYear = new Date().getFullYear();
-      const currentMonth = new Date().getMonth(); // 0-11
+    const members = () => records.filter(r => r.record_type === "member");
+    const attendances = () => records.filter(r => r.record_type === "attendance");
+    const visits = () => records.filter(r => r.record_type === "visit");
 
-      yearSelect.innerHTML = '';
-      for(let i = currentYear - 2; i <= currentYear + 2; i++) {
-        yearSelect.innerHTML += `<option value="${i}">${i}</option>`;
-      }
-      yearSelect.value = currentYear;
-      monthSelect.value = currentMonth;
-    }
-
-    function renderEvangelism() {
-      const tbody = document.getElementById('evangelism-body');
-      const emptyState = document.getElementById('evangelism-empty');
-      const month = parseInt(document.getElementById('pi-month').value);
-      const year = parseInt(document.getElementById('pi-year').value);
-
-      // Filter berdasarkan bulan & tahun
-      const filteredData = evangelismData.filter(item => {
-        const date = new Date(item.date);
-        return date.getMonth() === month && date.getFullYear() === year;
-      });
-
-      // Kalkulasi Dashboard PI
-      document.getElementById('pi-count').innerText = filteredData.length;
-      
-      const uniqueNames = new Set(filteredData.map(item => item.name.toLowerCase()));
-      document.getElementById('pi-unique').innerText = uniqueNames.size;
-      
-      const followupCount = filteredData.filter(item => item.status.includes('Follow-up') || item.status.includes('Tunggu')).length;
-      document.getElementById('pi-followup-count').innerText = followupCount;
-
-      // Render Tabel
-      tbody.innerHTML = '';
-      if(filteredData.length === 0) {
-        tbody.parentElement.classList.add('hidden');
-        emptyState.classList.remove('hidden');
+    // Navigasi & Auth
+    function switchAuthTab(type) {
+      if(type === 'login') {
+        $('login-form').classList.remove('hidden');
+        $('register-form').classList.add('hidden');
+        $('tab-login-btn').className = "flex-1 py-1.5 text-xs font-bold rounded bg-amber-500 text-slate-900 transition";
+        $('tab-register-btn').className = "flex-1 py-1.5 text-xs font-bold rounded bg-slate-700 text-white transition";
       } else {
-        tbody.parentElement.classList.remove('hidden');
-        emptyState.classList.add('hidden');
-        
-        filteredData.forEach(item => {
-          // Pewarnaan status
-          let statusColor = "bg-slate-100 text-slate-700";
-          if(item.status.includes('Follow-up')) statusColor = "bg-amber-100 text-amber-700";
-          if(item.status.includes('Ibadah') || item.status.includes('Komunitas')) statusColor = "bg-emerald-100 text-emerald-700";
-
-          tbody.innerHTML += `
-            <tr>
-              <td class="font-bold">${item.name}</td>
-              <td>${item.date}</td>
-              <td>${item.visitor}</td>
-              <td>${item.response}</td>
-              <td class="max-w-[200px] truncate" title="${item.notes}">${item.notes || '-'}</td>
-              <td><span class="px-2 py-1 rounded-full text-[10px] font-bold ${statusColor}">${item.status}</span></td>
-              <td>
-                <button type="button" class="link-btn danger" onclick="deleteEvangelism('${item.id}')">Hapus</button>
-              </td>
-            </tr>
-          `;
-        });
+        $('login-form').classList.add('hidden');
+        $('register-form').classList.remove('hidden');
+        $('tab-login-btn').className = "flex-1 py-1.5 text-xs font-bold rounded bg-slate-700 text-white transition";
+        $('tab-register-btn').className = "flex-1 py-1.5 text-xs font-bold rounded bg-amber-500 text-slate-900 transition";
       }
     }
 
-    function handleSaveEvangelism(e) {
+    function handleLogin(e) {
       e.preventDefault();
-      
-      // Ambil Nilai dari form
-      const newPI = {
-        id: 'PI-' + Date.now(),
-        name: document.getElementById('pi-name').value,
-        date: document.getElementById('pi-date').value,
-        visitor: document.getElementById('pi-visitor').value,
-        response: document.getElementById('pi-response').value,
-        status: document.getElementById('pi-status').value,
-        notes: document.getElementById('pi-notes').value
+      $('welcome').style.display = 'none';
+      $('dashboard').classList.add('active');
+      showToast('Berhasil masuk ke sistem');
+      renderAll();
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      showToast('Akun berhasil dibuat, silakan login!');
+      switchAuthTab('login');
+    }
+
+    function handleLogout() {
+      $('dashboard').classList.remove('active');
+      $('welcome').style.display = 'flex';
+      showToast('Anda telah keluar');
+    }
+
+    function toggleSidebar() {
+      $('sidebar').classList.toggle('open');
+    }
+
+    // Modal Manager
+    function openModal(id) { $(id).classList.add('show'); }
+    function closeModal(id) { $(id).classList.remove('show'); }
+
+    function showToast(msg) {
+      $('toast-msg').innerText = msg;
+      $('toast').classList.add('show');
+      setTimeout(() => $('toast').classList.remove('show'), 3000);
+    }
+
+    // Members Management
+    function openAddMemberModal() {
+      editingRecord = null;
+      $('modal-member-title').innerText = 'Tambah Anggota Jemaat';
+      $('member-form').reset();
+      openModal('member-modal');
+    }
+
+    function openEditMemberModal(id) {
+      editingRecord = records.find(r => r.__backendId === id);
+      if(!editingRecord) return;
+      $('modal-member-title').innerText = 'Edit Anggota Jemaat';
+      $('m-name').value = editingRecord.name || '';
+      $('m-commission').value = editingRecord.commission || DEFAULT_COMMISSIONS[0];
+      $('m-pob').value = editingRecord.pob || '';
+      $('m-dob').value = editingRecord.dob || '';
+      $('m-phone').value = editingRecord.phone || '';
+      $('m-status').value = editingRecord.status || 'Aktif';
+      $('m-address').value = editingRecord.address || '';
+      openModal('member-modal');
+    }
+
+    function handleSaveMember(e) {
+      e.preventDefault();
+      const data = {
+        record_type: 'member',
+        name: $('m-name').value,
+        commission: $('m-commission').value,
+        pob: $('m-pob').value,
+        dob: $('m-dob').value,
+        phone: $('m-phone').value,
+        status: $('m-status').value,
+        address: $('m-address').value
       };
 
-      evangelismData.push(newPI);
-      
-      // Reset Form & Tutup Modal
-      document.getElementById('evangelism-form').reset();
-      closeModal('evangelism-modal');
-      
-      // Ubah filter agar sesuai dengan tanggal input
-      const savedDate = new Date(newPI.date);
-      document.getElementById('pi-month').value = savedDate.getMonth();
-      document.getElementById('pi-year').value = savedDate.getFullYear();
-      
-      renderEvangelism();
-      
-      // Notifikasi Feedback
-      if(typeof showToast === 'function') {
-         showToast('Data Penginjilan Pribadi berhasil disimpan!');
+      if(editingRecord) {
+        Object.assign(editingRecord, data);
       } else {
-         alert('Data Penginjilan Pribadi berhasil disimpan!');
+        data.__backendId = Date.now().toString();
+        records.push(data);
+      }
+      saveData();
+      closeModal('member-modal');
+      showToast('Data anggota berhasil disimpan');
+    }
+
+    function deleteMember(id) {
+      if(confirm('Apakah Anda yakin ingin menghapus anggota ini?')) {
+        records = records.filter(r => r.__backendId !== id);
+        saveData();
+        showToast('Anggota berhasil dihapus');
       }
     }
 
-    function deleteEvangelism(id) {
-      if(confirm('Apakah Anda yakin ingin menghapus catatan Penginjilan ini?')) {
-        evangelismData = evangelismData.filter(item => item.id !== id);
-        renderEvangelism();
+    // QR Generator Modal
+    function showMemberQR(id) {
+      const m = records.find(r => r.__backendId === id);
+      if(!m) return;
+      $('qr-member-name').innerText = m.name;
+      $('qr-member-details').innerText = `${m.commission} • ${m.phone || 'No Telp (-)'}`;
+      $('qrcode-container').innerHTML = '';
+      
+      const qrcode = new QRCode($('qrcode-container'), {
+        text: m.__backendId,
+        width: 160,
+        height: 160
+      });
+
+      setTimeout(() => {
+        const img = $('qrcode-container').querySelector('img');
+        if(img) $('download-qr-btn').href = img.src;
+      }, 300);
+
+      openModal('qr-modal');
+    }
+
+    // Visits Management
+    function openVisitModal() {
+      editingVisitRecord = null;
+      $('visit-form').reset();
+      populateVisitMemberSelect();
+      openModal('visit-modal');
+    }
+
+    function populateVisitMemberSelect() {
+      const sel = $('v-member-name');
+      sel.innerHTML = '<option value="">-- Pilih Anggota --</option>';
+      members().forEach(m => {
+        sel.innerHTML += `<option value="${m.name}">${m.name} (${m.commission})</option>`;
+      });
+    }
+
+    function handleSaveVisit(e) {
+      e.preventDefault();
+      const data = {
+        record_type: 'visit',
+        member_name: $('v-member-name').value,
+        date: $('v-date').value,
+        visitor: $('v-visitor').value,
+        purpose: $('v-purpose').value,
+        status: $('v-status').value,
+        notes: $('v-notes').value
+      };
+
+      if(editingVisitRecord) {
+        Object.assign(editingVisitRecord, data);
+      } else {
+        data.__backendId = Date.now().toString();
+        records.push(data);
+      }
+      saveData();
+      closeModal('visit-modal');
+      showToast('Kunjungan berhasil dicatat');
+    }
+
+    function deleteVisit(id) {
+      if(confirm('Hapus catatan kunjungan ini?')) {
+        records = records.filter(r => r.__backendId !== id);
+        saveData();
+        showToast('Catatan kunjungan dihapus');
       }
     }
 
-    // Eksekusi ketika aplikasi dimuat
+    // QR Scanner
+    function initScanner() {
+      if(html5QrcodeScanner) return;
+      html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: {width: 250, height: 250} });
+      html5QrcodeScanner.render((decodedText) => {
+        const member = members().find(m => m.__backendId === decodedText);
+        if(member) {
+          const att = {
+            __backendId: Date.now().toString(),
+            record_type: 'attendance',
+            member_id: member.__backendId,
+            member_name: member.name,
+            service: $('qr-attendance-service').value,
+            date: new Date().toISOString().split('T')[0],
+            time: new Date().toLocaleTimeString('id-ID')
+          };
+          records.push(att);
+          saveData();
+          $('scan-result-box').innerHTML = `
+            <div class="text-green-600 font-bold">✓ Absensi Berhasil!</div>
+            <div class="font-bold text-slate-800 text-base">${member.name}</div>
+            <div class="text-xs text-slate-500">${att.service} • ${att.time}</div>
+          `;
+          showToast(`Berhasil absen: ${member.name}`);
+        } else {
+          $('scan-result-box').innerHTML = `<div class="text-red-500 font-bold">QR Code tidak terdaftar!</div>`;
+        }
+      }, (err) => {});
+    }
+
+    // Render Data & Laporan
+    function renderMembers() {
+      const q = ($('member-search').value || '').toLowerCase();
+      const comm = $('member-commission-filter').value;
+      const body = $('member-body');
+      
+      const filtered = members().filter(m => {
+        const matchQ = m.name.toLowerCase().includes(q) || (m.address && m.address.toLowerCase().includes(q));
+        const matchComm = !comm || m.commission === comm;
+        return matchQ && matchComm;
+      });
+
+      body.innerHTML = filtered.map(m => `
+        <tr>
+          <td><strong>${m.name}</strong></td>
+          <td><span class="status">${m.commission}</span></td>
+          <td>${m.pob || '-'}, ${m.dob || '-'}</td>
+          <td>${m.phone || '-'}</td>
+          <td>${m.address || '-'}</td>
+          <td><span class="status" style="background:${m.status==='Aktif'?'#e6f4ea':'#fce8e6'}; color:${m.status==='Aktif'?'#137333':'#c5221f'}">${m.status}</span></td>
+          <td>
+            <button class="link-btn" onclick="showMemberQR('${m.__backendId}')">QR</button>
+            <button class="link-btn" onclick="openEditMemberModal('${m.__backendId}')">Edit</button>
+            <button class="link-btn danger" onclick="deleteMember('${m.__backendId}')">Hapus</button>
+          </td>
+        </tr>
+      `).join('');
+
+      $('member-empty').classList.toggle('hidden', filtered.length > 0);
+    }
+
+    function renderVisits() {
+      const mVal = parseInt($('recap-month').value);
+      const yVal = parseInt($('recap-year').value);
+
+      const filtered = visits().filter(v => {
+        if(!v.date) return false;
+        const d = new Date(v.date);
+        return d.getMonth() === mVal && d.getFullYear() === yVal;
+      });
+
+      $('recap-count').innerText = filtered.length;
+      $('recap-unique-members').innerText = new Set(filtered.map(f => f.member_name)).size;
+      $('recap-followup-count').innerText = filtered.filter(f => f.status !== 'Selesai').length;
+
+      $('visit-recap-body').innerHTML = filtered.map(v => `
+        <tr>
+          <td><strong>${v.member_name}</strong></td>
+          <td>${v.date}</td>
+          <td>${v.visitor}</td>
+          <td>${v.purpose}</td>
+          <td>${v.notes || '-'}</td>
+          <td><span class="status">${v.status}</span></td>
+          <td><button class="link-btn danger" onclick="deleteVisit('${v.__backendId}')">Hapus</button></td>
+        </tr>
+      `).join('');
+
+      $('visit-recap-empty').classList.toggle('hidden', filtered.length > 0);
+    }
+
+    function renderAttendance() {
+      const body = $('attendance-list-body');
+      const atts = attendances();
+      body.innerHTML = atts.map(a => `
+        <tr>
+          <td>${a.date}</td>
+          <td><strong>${a.member_name}</strong></td>
+          <td><span class="status">${a.service}</span></td>
+          <td>${a.time}</td>
+        </tr>
+      `).join('');
+      $('attendance-empty').classList.toggle('hidden', atts.length > 0);
+    }
+
+    // --- FITUR REKAP LAPORAN (Mingguan, Bulanan, Tahunan) & EXPORT ---
+    function toggleReportFilters() {
+      const p = $('rpt-period').value;
+      $('rpt-filter-date').classList.toggle('hidden', p !== 'weekly');$('rpt-filter-month').classList.toggle('hidden', p === 'weekly');
+    }
+
+    function generateReport() {
+      const category = $('rpt-category').value;
+      const period = $('rpt-period').value;
+      const head = $('report-table-head');
+      const body = $('report-table-body');
+      
+      let filteredData = [];
+      let title = "";
+
+      // Logic Filtering Berdasarkan Periode
+      if(category === 'attendance') {
+        title = "Laporan Rekapitulasi Kehadiran Jemaat";
+        filteredData = attendances().filter(a => filterByPeriod(a.date, period));
+      } else if(category === 'visits') {
+        title = "Laporan Rekapitulasi Kunjungan Pastoral";
+        filteredData = visits().filter(v => filterByPeriod(v.date, period));
+      } else {
+        title = "Laporan Database Anggota Jemaat";
+        filteredData = members();
+      }
+
+      $('rpt-header-title').innerText = title;
+      $('rpt-header-sub').innerText = `Tipe Laporan: ${period.toUpperCase()} | Total Data: ${filteredData.length}`;
+
+      // Render Table
+      if(category === 'attendance') {
+        head.innerHTML = `<tr><th>No</th><th>Tanggal</th><th>Nama Jemaat</th><th>Layanan</th><th>Waktu Absen</th></tr>`;
+        body.innerHTML = filteredData.map((d, i) => `
+          <tr><td>${i+1}</td><td>${d.date}</td><td>${d.member_name}</td><td>${d.service}</td><td>${d.time}</td></tr>
+        `).join('');
+      } else if(category === 'visits') {
+        head.innerHTML = `<tr><th>No</th><th>Tanggal</th><th>Nama Jemaat</th><th>Pelayan</th><th>Tujuan</th><th>Status</th></tr>`;
+        body.innerHTML = filteredData.map((d, i) => `
+          <tr><td>${i+1}</td><td>${d.date}</td><td>${d.member_name}</td><td>${d.visitor}</td><td>${d.purpose}</td><td>${d.status}</td></tr>
+        `).join('');
+      } else {
+        head.innerHTML = `<tr><th>No</th><th>Nama Lengkap</th><th>Komisi</th><th>Telepon</th><th>Status</th><th>Alamat</th></tr>`;
+        body.innerHTML = filteredData.map((d, i) => `
+          <tr><td>${i+1}</td><td>${d.name}</td><td>${d.commission}</td><td>${d.phone || '-'}</td><td>${d.status}</td><td>${d.address || '-'}</td></tr>
+        `).join('');
+      }
+    }
+
+    function filterByPeriod(dateStr, period) {
+      if(!dateStr) return false;
+      const d = new Date(dateStr);
+      
+      if(period === 'weekly') {
+        const start = $('rpt-start-date').value ? new Date($('rpt-start-date').value) : new Date(Date.now() - 7*24*60*60*1000);
+        const end = new Date(start);
+        end.setDate(end.getDate() + 7);
+        return d >= start && d <= end;
+      } else if(period === 'monthly') {
+        const m = parseInt($('rpt-month').value);
+        const y = parseInt($('rpt-year').value);
+        return d.getMonth() === m && d.getFullYear() === y;
+      } else if(period === 'yearly') {
+        const y = parseInt($('rpt-year').value);
+        return d.getFullYear() === y;
+      }
+      return true;
+    }
+
+    // Export Laporan (Excel CSV, Word DOC, PDF)
+    function exportReport(type) {
+      const table = $('report-table');
+      const title = $('rpt-header-title').innerText;
+
+      if (type === 'excel') {
+        let csv = [];
+        for (let row of table.rows) {
+          let cols = Array.from(row.cells).map(cell => `"${cell.innerText.replace(/"/g, '""')}"`);
+          csv.push(cols.join(","));
+        }
+        const blob = new Blob([csv.join("\n")], { type: "text/csv;charset=utf-8;" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = `${title}.csv`;
+        a.click();
+      } else if (type === 'word') {
+        const html = `
+          <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+          <head><title>${title}</title></head>
+          <body><h2>${title}</h2>${table.outerHTML}</body>
+          </html>`;
+        const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = `${title}.doc`;
+        a.click();
+      } else if (type === 'pdf') {
+        const printWin = window.open('', '', 'width=800,height=600');
+        printWin.document.write(`
+          <html><head><title>${title}</title>
+          <style>
+            body{font-family:sans-serif;padding:20px;}
+            table{width:100%;border-collapse:collapse;margin-top:15px;}
+            th,td{border:1px solid #ccc;padding:8px;text-align:left;font-size:12px;}
+            th{background:#f2f2f2;}
+          </style>
+          </head><body>
+          <h2>${title}</h2>
+          <p>${$('rpt-header-sub').innerText}</p>
+          ${table.outerHTML}
+          </body></html>
+        `);
+        printWin.document.close();
+        printWin.focus();
+        printWin.print();
+        printWin.close();
+      }
+    }
+
+    // Init & Populate Filters
+    function setupReportFilters() {
+      const months = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+      const rptM = $('rpt-month');
+      const rptY = $('rpt-year');
+      const recapY = $('recap-year');
+      
+      const currentYear = new Date().getFullYear();
+      const currentMonth = new Date().getMonth();
+
+      rptM.innerHTML = months.map((m, i) => `<option value="${i}" ${i===currentMonth?'selected':''}>${m}</option>`).join('');
+      
+      let yearOpts = '';
+      for(let y = currentYear - 3; y <= currentYear + 2; y++) {
+        yearOpts += `<option value="${y}" ${y===currentYear?'selected':''}>${y}</option>`;
+      }
+      rptY.innerHTML = yearOpts;
+      recapY.innerHTML = yearOpts;
+
+      // Set default start date mingguan
+      const today = new Date();
+      $('rpt-start-date').value = today.toISOString().split('T')[0];
+    }
+
+    function renderAll() {
+      $('metric-members').innerText = members().length;
+      $('metric-commissions').innerText = DEFAULT_COMMISSIONS.length;
+      $('metric-attendance').innerText = attendances().length;
+      $('metric-visits').innerText = visits().length;
+
+      // Render Cards Komisi
+      $('commission-cards').innerHTML = DEFAULT_COMMISSIONS.map(c => {
+        const count = members().filter(m => m.commission === c).length;
+        return `<div class="card bg-slate-50 border text-center p-3"><p class="text-xs text-slate-500 font-bold">${c}</p><strong class="text-xl text-slate-800">${count}</strong></div>`;
+      }).join('');
+
+      renderMembers();
+      renderVisits();
+      renderAttendance();
+      generateReport();
+    }
+
+    // Event Navigation View Switching
     document.addEventListener('DOMContentLoaded', () => {
-       initEvangelismFilters();
-       renderEvangelism();
-       lucide.createIcons();
-       
-       // Logika perpindahan halaman tab menu Navigasi
-       const navLinks = document.querySelectorAll('.nav-link');
-       navLinks.forEach(link => {
-         link.addEventListener('click', function(e) {
-            // Hindari action kalau yang diklik adalah tombol "Keluar" (tidak punya data-view)
-            const targetView = this.getAttribute('data-view');
-            if(!targetView) return;
+      setupReportFilters();
 
-            // Update UI Menu Aktif
-            navLinks.forEach(nav => nav.classList.remove('active'));
-            this.classList.add('active');
+      // Populate Commission Selects
+      const mComm = $('m-commission');
+      const filterComm = $('member-commission-filter');
+      
+      filterComm.innerHTML = '<option value="">Semua Komisi</option>';
+      DEFAULT_COMMISSIONS.forEach(c => {
+        mComm.innerHTML += `<option value="${c}">${c}</option>`;
+        filterComm.innerHTML += `<option value="${c}">${c}</option>`;
+      });
 
-            // Update UI View Tampil
-            document.querySelectorAll('.view').forEach(view => view.classList.remove('active'));
-            const viewEl = document.getElementById(targetView);
-            if(viewEl) viewEl.classList.add('active');
+      document.querySelectorAll('.nav-link[data-view]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+          document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+          
+          btn.classList.add('active');
+          const viewId = btn.getAttribute('data-view');
+          $(viewId).classList.add('active');$('page-heading-title').innerText = btn.querySelector('span').innerText;
 
-            // Update Judul Halaman
-            const titleEl = document.getElementById('page-heading-title');
-            if(titleEl) {
-               titleEl.innerText = this.querySelector('span').innerText;
-            }
+          if(window.innerWidth <= 820) $('sidebar').classList.remove('open');
+          
+          if(viewId === 'reports-view') generateReport();
+        });
+      });
 
-            // (Opsional) Tutup menu sidebar di mobile setelah klik
-            const sidebar = document.getElementById('sidebar');
-            if(sidebar && sidebar.classList.contains('open')) {
-                sidebar.classList.remove('open');
-            }
-         });
-       });
+      lucide.createIcons();
+      renderAll();
     });
   </script>
+</body>
+</html>
+<script>
+        // Paste kode 'async function simpanAnggota(event)' di sini
+        async function simpanAnggota(event) {
+            event.preventDefault();
+
+            const urlDatabase = "https://script.google.com/macros/s/AKfycbzEXT3EMcFAklpeeBFGm8VjLUaJieAj-IOXzTGmIf1wXEam7W1Mb_V7ZPphk2O5ikEzxw/exec";
+
+            const dataAnggota = {
+                action: "tambah_anggota",
+                id: "MEMBER-" + Math.floor(Math.random() * 10000),
+                nama: document.getElementById('m-name')?.value || "",
+                komisi: document.getElementById('m-commission')?.value || "",
+                tempat_lahir: document.getElementById('m-pob')?.value || "",
+                tgl_lahir: document.getElementById('m-dob')?.value || "",
+                telepon: document.getElementById('m-phone')?.value || "",
+                status: document.getElementById('m-status')?.value || ""
+            };
+
+            const tombol = event.target.querySelector('button[type="submit"]') || event.target.querySelector('button');
+            const teksAwal = tombol ? tombol.innerText : "Simpan Data";
+            
+            if (tombol) {
+                tombol.innerText = "Menyimpan...";
+                tombol.disabled = true;
+            }
+
+            try {
+                const kirim = await fetch(urlDatabase, {
+                    method: 'POST',
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify(dataAnggota)
+                });
+
+                const respon = await kirim.json();
+
+                if (respon.status === "success") {
+                    alert("Berhasil! Data telah masuk ke Google Sheets.");
+                    event.target.reset();
+                    if (typeof closeModal === 'function') {
+                        closeModal('member-modal');
+                    }
+                } else {
+                    alert("Gagal menyimpan: " + (respon.pesan || "Terjadi kesalahan server."));
+                }
+            } catch (error) {
+                console.error("Detail Error:", error);
+                alert("Gagal mengirim data. Pastikan koneksi internet menyala.");
+            } finally {
+                if (tombol) {
+                    tombol.innerText = teksAwal;
+                    tombol.disabled = false;
+                }
+            }
+        }
+    </script>
 </body>
 </html>
