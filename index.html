@@ -179,16 +179,20 @@
       <div><strong id="church-name-side" class="canva-text text-white" style="font-size: 15px;">GKY Singkawang</strong> <small class="canva-text block text-xs text-slate-400">Gereja Kristus Yesus</small></div>
      </div>
      <nav class="mt-4 space-y-1" aria-label="Navigasi utama">
-      <button class="nav-link active" data-view="dashboard-view" type="button"><i data-lucide="layout-dashboard" class="w-4 h-4"></i><span>Dashboard</span></button> 
-      <button class="nav-link" data-view="members-view" type="button"><i data-lucide="users" class="w-4 h-4"></i><span>Anggota Jemaat</span></button> 
-      <button class="nav-link" data-view="qr-attendance-view" type="button"><i data-lucide="qr-code" class="w-4 h-4"></i><span>Absensi Scan QR</span></button> 
-      <button class="nav-link" data-view="attendance-view" type="button"><i data-lucide="calendar-check" class="w-4 h-4"></i><span>Kehadiran</span></button> 
-      <button class="nav-link" data-view="visits-view" type="button"><i data-lucide="clipboard-list" class="w-4 h-4"></i><span>Kunjungan Jemaat</span></button> 
-      <button class="nav-link" data-view="reports-view" type="button"><i data-lucide="bar-chart-3" class="w-4 h-4"></i><span>Laporan</span></button> 
-      <button class="nav-link" data-view="settings-view" type="button"><i data-lucide="settings" class="w-4 h-4"></i><span>Pengaturan</span></button>
-      <button class="nav-link text-red-300 hover:text-red-100" onclick="handleLogout()" type="button"><i data-lucide="log-out" class="w-4 h-4"></i><span>Keluar</span></button>
-     </nav>
-    </aside>
+       <button class="nav-link active" data-view="dashboard-view" type="button"><i data-lucide="layout-dashboard" class="w-4 h-4"></i><span>Dashboard</span></button> 
+       <button class="nav-link" data-view="members-view" type="button"><i data-lucide="users" class="w-4 h-4"></i><span>Anggota Jemaat</span></button> 
+       <button class="nav-link" data-view="qr-attendance-view" type="button"><i data-lucide="qr-code" class="w-4 h-4"></i><span>Absensi Scan QR</span></button> 
+       <button class="nav-link" data-view="attendance-view" type="button"><i data-lucide="calendar-check" class="w-4 h-4"></i><span>Kehadiran</span></button> 
+       <button class="nav-link" data-view="visits-view" type="button"><i data-lucide="clipboard-list" class="w-4 h-4"></i><span>Kunjungan Jemaat</span></button> 
+
+       <!-- === TAMBAHKAN 1 BARIS INI DI SINI === -->
+       <button class="nav-link" data-view="evangelism-view" type="button"><i data-lucide="book-open" class="w-4 h-4"></i><span>Penginjilan Pribadi</span></button>
+       <!-- ===================================== -->
+
+       <button class="nav-link" data-view="reports-view" type="button"><i data-lucide="bar-chart-3" class="w-4 h-4"></i><span>Laporan</span></button> 
+       <button class="nav-link" data-view="settings-view" type="button"><i data-lucide="settings" class="w-4 h-4"></i><span>Pengaturan</span></button>
+       <button class="nav-link text-red-300 hover:text-red-100" onclick="handleLogout()" type="button"><i data-lucide="log-out" class="w-4 h-4"></i><span>Keluar</span></button>
+      </nav>
 
     <main class="main-area">
      <header class="topbar">
@@ -388,7 +392,72 @@
        <p id="visit-recap-empty" class="empty hidden">Tidak ada data kunjungan pada bulan dan tahun yang dipilih.</p>
       </div>
      </section>
+<!-- Evangelism View (Penginjilan Pribadi) -->
+      <section id="evangelism-view" class="view">
+       <div class="panel mb-6">
+        <div class="flex justify-between gap-3 flex-wrap items-center">
+         <div>
+          <h2 class="panel-title">Penginjilan Pribadi (PI)</h2>
+          <p class="panel-sub">Catat dan pantau kegiatan penginjilan personal kepada jiwa baru.</p>
+         </div>
+         <button onclick="openModal('evangelism-modal')" class="primary" type="button" style="width: auto;">
+          <i data-lucide="plus" class="w-4 h-4"></i><span>Catat PI Baru</span>
+         </button>
+        </div>
+       </div>
 
+       <!-- Recap Section -->
+       <div class="panel mb-6">
+        <div class="flex justify-between gap-3 flex-wrap items-center border-b pb-3 mb-4">
+         <div>
+          <h3 class="font-bold text-slate-800 text-base">Rekapitulasi PI Bulanan</h3>
+          <p class="panel-sub">Daftar jiwa yang dijangkau pada periode yang dipilih.</p>
+         </div>
+         <div class="flex gap-2">
+          <select id="pi-month" class="field" style="width: auto;" onchange="renderEvangelism()">
+           <option value="0">Januari</option><option value="1">Februari</option><option value="2">Maret</option>
+           <option value="3">April</option><option value="4">Mei</option><option value="5">Juni</option>
+           <option value="6">Juli</option><option value="7">Agustus</option><option value="8">September</option>
+           <option value="9">Oktober</option><option value="10">November</option><option value="11">Desember</option>
+          </select>
+          <select id="pi-year" class="field" style="width: auto;" onchange="renderEvangelism()"></select>
+         </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+         <div class="p-3 bg-slate-50 border rounded-lg text-center">
+          <p class="text-xs text-slate-500 font-medium">Total PI Bulan Ini</p>
+          <strong id="pi-count" class="text-2xl text-slate-800 block mt-1">0</strong>
+         </div>
+         <div class="p-3 bg-slate-50 border rounded-lg text-center">
+          <p class="text-xs text-slate-500 font-medium">Jiwa Terjangkau</p>
+          <strong id="pi-unique" class="text-2xl text-indigo-600 block mt-1">0</strong>
+         </div>
+         <div class="p-3 bg-slate-50 border rounded-lg text-center">
+          <p class="text-xs text-slate-500 font-medium">Perlu Follow-Up</p>
+          <strong id="pi-followup-count" class="text-2xl text-red-600 block mt-1">0</strong>
+         </div>
+        </div>
+
+        <div class="table-wrap">
+         <table class="data-table">
+          <thead>
+           <tr>
+            <th>Nama Orang</th>
+            <th>Tanggal PI</th>
+            <th>Penginjil</th>
+            <th>Respon</th>
+            <th>Pokok Doa / Catatan</th>
+            <th>Status</th>
+            <th>Aksi</th>
+           </tr>
+          </thead>
+          <tbody id="evangelism-body"></tbody>
+         </table>
+        </div>
+        <p id="evangelism-empty" class="empty hidden">Tidak ada data penginjilan pada bulan dan tahun yang dipilih.</p>
+       </div>
+      </section>
      <!-- Reports View (Fitur Rekap Mingguan/Bulanan/Tahunan & Export) -->
      <section id="reports-view" class="view">
       <div class="panel mb-4">
@@ -526,7 +595,61 @@
     </form>
    </div>
   </div>
-
+<!-- Modal Input Penginjilan Pribadi -->
+  <div id="evangelism-modal" class="modal-layer" role="dialog">
+   <div class="modal">
+    <div class="modal-head">
+     <div>
+      <h2 id="modal-pi-title" class="serif text-xl m-0 font-bold text-slate-800">Catat Penginjilan Pribadi</h2>
+      <p class="panel-sub">Input data penjangkauan jiwa baru secara manual.</p>
+     </div>
+     <button class="close" onclick="closeModal('evangelism-modal')" type="button"><i data-lucide="x" class="w-4 h-4"></i></button>
+    </div>
+    <form id="evangelism-form" onsubmit="handleSaveEvangelism(event)">
+     <div class="form-grid">
+      <div class="form-group full">
+       <label>Nama Orang (Jiwa Baru)</label>
+       <!-- BEDA UTAMA: Di sini berupa input teks bebas, bukan select dropdown -->
+       <input id="pi-name" class="field" type="text" placeholder="Masukkan nama orang yang diinjili..." required>
+      </div>
+      <div class="form-group">
+       <label>Tanggal Penginjilan</label>
+       <input id="pi-date" class="field" type="date" required>
+      </div>
+      <div class="form-group">
+       <label>Penginjil / Pelayan</label>
+       <input id="pi-visitor" class="field" placeholder="Contoh: Pdt. Yohanes" required>
+      </div>
+      <div class="form-group">
+       <label>Kondisi / Respon</label>
+       <select id="pi-response" class="field">
+        <option value="Terbuka / Menerima">Terbuka / Menerima</option>
+        <option value="Ragu-ragu / Bertanya">Ragu-ragu / Bertanya</option>
+        <option value="Menolak / Tertutup">Menolak / Tertutup</option>
+        <option value="Lainnya">Lainnya</option>
+       </select>
+      </div>
+      <div class="form-group">
+       <label>Status Tindak Lanjut</label>
+       <select id="pi-status" class="field">
+        <option value="Tunggu Proses">Tunggu Proses</option>
+        <option value="Perlu Follow-up (Kunjungan Lagi)">Perlu Follow-up (Kunjungan Lagi)</option>
+        <option value="Diundang Ibadah">Diundang Ibadah</option>
+        <option value="Bergabung Komunitas">Bergabung Komunitas</option>
+       </select>
+      </div>
+      <div class="form-group full">
+       <label>Ringkasan Percakapan / Pokok Doa</label>
+       <textarea id="pi-notes" class="field textarea" placeholder="Ceritakan latar belakang jiwa dan apa yang perlu didoakan..."></textarea>
+      </div>
+     </div>
+     <div class="mt-4 flex justify-end gap-2">
+      <button class="secondary" onclick="closeModal('evangelism-modal')" type="button" style="width: auto;">Batal</button>
+      <button id="pi-save" class="primary" type="submit" style="width: auto;">Simpan Data PI</button>
+     </div>
+    </form>
+   </div>
+  </div>
   <!-- Modal QR Code Generator -->
   <div id="qr-modal" class="modal-layer" role="dialog">
    <div class="modal text-center">
