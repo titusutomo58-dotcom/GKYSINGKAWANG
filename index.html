@@ -590,8 +590,9 @@
   <div id="toast" class="toast" role="status">
    <i data-lucide="check-circle" class="w-4 h-4"></i><span id="toast-msg" style="color: #fff; font-weight: 700;">Perubahan berhasil disimpan.</span>
   </div>
-
-  <script> const urlDatabase = "https://script.google.com/macros/s/AKfycby6hzKGlbcJwSYZDuDu9C22KFmSe_C90rfm0TjuSzqvfBL7Kq7a1WhcSUt4IuKdDEzBiQ/exec"; 
+    
+    // Inisialisasi Data Default
+<script> const urlDatabase = "https://script.google.com/macros/s/AKfycby6hzKGlbcJwSYZDuDu9C22KFmSe_C90rfm0TjuSzqvfBL7Kq7a1WhcSUt4IuKdDEzBiQ/exec";  
 async function loadDataFromCloud() {
   try {
     let response = await fetch(urlDatabase);
@@ -682,25 +683,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
     const $ = id => document.getElementById(id);
     const DEFAULT_COMMISSIONS = ["Anggota Jemaat","Komisi Remaja","Komisi Sekolah Minggu","Komisi Alpha Course","Komisi Wanita"];
-    
-    // Inisialisasi Data Default
-    let records = JSON.parse(localStorage.getItem('gky_records')) || [
-      { __backendId: 'm1', record_type: 'member', name: 'Budi Santoso', commission: 'Anggota Jemaat', pob: 'Singkawang', dob: '1988-05-12', phone: '08123456789', status: 'Aktif', address: 'Jl. Diponegoro No. 12' },
-      { __backendId: 'm2', record_type: 'member', name: 'Siti Rahma', commission: 'Komisi Wanita', pob: 'Singkawang', dob: '1992-08-20', phone: '08987654321', status: 'Aktif', address: 'Jl. Pasiran No. 45' }
-    ];
 
-    let editingRecord = null;
-    let editingVisitRecord = null;
-    let html5QrcodeScanner = null;
-
-    const saveData = () => {
-      localStorage.setItem('gky_records', JSON.stringify(records));
-      renderAll();
-    };
-
-    const members = () => records.filter(r => r.record_type === "member");
-    const attendances = () => records.filter(r => r.record_type === "attendance");
-    const visits = () => records.filter(r => r.record_type === "visit");
 
     // Navigasi & Auth
     function switchAuthTab(type) {
