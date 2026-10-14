@@ -9,6 +9,7 @@
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,600;9..144,700&amp;display=swap" rel="stylesheet">
   <style>
     :root{
@@ -23,6 +24,7 @@
     button:disabled{cursor:not-allowed;opacity:.65}
     .app-shell{width:100%;min-height:100vh}
     .serif{font-family:"Fraunces",serif}
+
     .welcome{
       min-height:100vh;
       display:flex;align-items:center;justify-content:center;padding:20px;
@@ -33,6 +35,7 @@
     .logo-halo{width:90px;height:90px;margin:auto;padding:6px;border-radius:50%;background:transparent}
     .logo-halo img{width:100%;height:100%;object-fit:contain;border-radius:50%;display:block;background:white;}
     .gold-rule{width:72px;height:1px;background:#e7c474;margin:15px auto}
+
     .primary,.secondary,.danger-button{
       border:0;border-radius:10px;padding:11px 15px;font-weight:700;display:inline-flex;
       gap:7px;align-items:center;justify-content:center;transition:.2s ease;width:100%;
@@ -43,6 +46,7 @@
     .secondary:hover{background:#f7fafc}
     .danger-button{background:#fdf0f0;color:#9e3030;border:1px solid #f0cccc}
     .danger-button:hover{background:#f9dddd}
+
     .dashboard{display:none;min-height:100vh}
     .dashboard.active{display:flex}
     .sidebar{
@@ -90,6 +94,7 @@
     .link-btn{border:0;background:transparent;padding:4px 6px;color:#174d78;font-weight:700;font-size:12px}
     .link-btn.danger{color:#a53535}
     .mobile{display:none;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px}
+
     .modal-layer{display:none;position:fixed;z-index:70;inset:0;background:#03172b99;padding:16px;align-items:center;justify-content:center}
     .modal-layer.show{display:flex}
     .modal{width:min(100%,540px);max-height:90vh;overflow-y:auto;background:#fff;border-radius:16px;padding:20px}
@@ -97,7 +102,9 @@
     .close{border:0;background:#edf2f5;border-radius:50%;width:32px;height:32px;display:grid;place-items:center}
     .toast{position:fixed;right:16px;bottom:16px;z-index:90;display:none;align-items:center;gap:9px;padding:12px 16px;background:#173f35;color:#fff;border-radius:10px;box-shadow:0 14px 30px #001b1533;font-size:13px;font-weight:700}
     .toast.show{display:flex;animation:toastIn .25s ease}
+
     @keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
     @media(max-width:1024px){
       .grid4{grid-template-columns:repeat(2,minmax(0,1fr))}
       .content-grid{grid-template-columns:1fr}
@@ -132,6 +139,7 @@
          <button type="button" id="tab-login-btn" onclick="switchAuthTab('login')" class="flex-1 py-1.5 text-xs font-bold rounded bg-amber-500 text-slate-900 transition">Login</button>
          <button type="button" id="tab-register-btn" onclick="switchAuthTab('register')" class="flex-1 py-1.5 text-xs font-bold rounded bg-slate-700 text-white transition">Buat Akun</button>
        </div>
+
        <form id="login-form" class="space-y-3" onsubmit="handleLogin(event)">
          <div class="form-group">
            <label style="color:#e2e8f0; font-size:11px;">Username / Email</label>
@@ -143,6 +151,7 @@
          </div>
          <button type="submit" class="primary mt-1" style="padding:10px; font-size:13px;">MASUK SISTEM</button>
        </form>
+
        <form id="register-form" class="space-y-3 hidden" onsubmit="handleRegister(event)">
          <div class="form-group">
            <label style="color:#e2e8f0; font-size:11px;">Nama Lengkap</label>
@@ -163,6 +172,7 @@
      <p class="canva-text serif italic" style="color: rgb(255, 255, 255); font-weight: 400; font-size: 12px;">“Menjadi Gereja yang Mulia dan Misioner”</p>
     </div>
    </section>
+
    <div id="dashboard" class="dashboard">
     <aside id="sidebar" class="sidebar">
      <div class="brand"><img class="canva-image" src="Logo_Gereja_Kristus_Yesus.jpg" alt="Logo" onerror="this.src='https://via.placeholder.com/40?text=GKY'">
@@ -179,6 +189,7 @@
       <button class="nav-link text-red-300 hover:text-red-100" onclick="handleLogout()" type="button"><i data-lucide="log-out" class="w-4 h-4"></i><span>Keluar</span></button>
      </nav>
     </aside>
+
     <main class="main-area">
      <header class="topbar">
       <div class="flex gap-3 items-center">
@@ -188,6 +199,7 @@
        </div>
       </div>
      </header>
+
      <!-- Dashboard View -->
      <section id="dashboard-view" class="view active">
       <div class="grid4">
@@ -209,6 +221,7 @@
        </aside>
       </div>
      </section>
+
      <!-- Members View -->
      <section id="members-view" class="view">
       <div class="panel">
@@ -242,6 +255,7 @@
        <p id="member-empty" class="empty hidden">Belum ada data anggota. Tambahkan anggota untuk memulai administrasi.</p>
       </div>
      </section>
+
      <!-- QR Attendance View -->
      <section id="qr-attendance-view" class="view">
       <div class="panel">
@@ -273,6 +287,7 @@
        </div>
       </div>
      </section>
+
      <!-- Attendance View -->
      <section id="attendance-view" class="view">
       <div class="panel">
@@ -298,6 +313,7 @@
        <p id="attendance-empty" class="empty hidden">Belum ada catatan kehadiran.</p>
       </div>
      </section>
+
      <!-- Visits View -->
      <section id="visits-view" class="view">
       <div class="panel mb-6">
@@ -311,6 +327,7 @@
         </button>
        </div>
       </div>
+
       <!-- Recap Section -->
       <div class="panel mb-6">
        <div class="flex justify-between gap-3 flex-wrap items-center border-b pb-3 mb-4">
@@ -336,6 +353,7 @@
          <select id="recap-year" class="field" style="width: auto;" onchange="renderVisits()"></select>
         </div>
        </div>
+
        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <div class="p-3 bg-slate-50 border rounded-lg text-center">
          <p class="text-xs text-slate-500 font-medium">Total Kunjungan Bulan Ini</p>
@@ -350,6 +368,7 @@
          <strong id="recap-followup-count" class="text-2xl text-red-600 block mt-1">0</strong>
         </div>
        </div>
+
        <div class="table-wrap">
         <table class="data-table">
          <thead>
@@ -369,7 +388,8 @@
        <p id="visit-recap-empty" class="empty hidden">Tidak ada data kunjungan pada bulan dan tahun yang dipilih.</p>
       </div>
      </section>
-     <!-- Reports View -->
+
+     <!-- Reports View (Fitur Rekap Mingguan/Bulanan/Tahunan & Export) -->
      <section id="reports-view" class="view">
       <div class="panel mb-4">
        <h2 class="panel-title">Laporan Administrasi & Rekapitulasi</h2>
@@ -404,12 +424,14 @@
          </div>
         </div>
        </div>
+
        <div class="flex gap-2 mt-4 pt-3 border-t">
         <button onclick="exportReport('excel')" class="secondary" style="width:auto; padding:7px 14px; font-size:12px;"><i data-lucide="file-spreadsheet" class="w-4 h-4 text-green-600"></i> Unduh Excel (.csv)</button>
         <button onclick="exportReport('pdf')" class="secondary" style="width:auto; padding:7px 14px; font-size:12px;"><i data-lucide="file-text" class="w-4 h-4 text-red-600"></i> Unduh PDF</button>
         <button onclick="exportReport('word')" class="secondary" style="width:auto; padding:7px 14px; font-size:12px;"><i data-lucide="file-code" class="w-4 h-4 text-blue-600"></i> Unduh Word (.doc)</button>
        </div>
       </div>
+
       <div class="panel">
        <div id="report-print-area">
         <div class="text-center mb-4 border-b pb-2">
@@ -425,6 +447,7 @@
        </div>
       </div>
      </section>
+
      <!-- Settings View -->
      <section id="settings-view" class="view">
       <div class="settings-head flex justify-between items-center mb-4">
@@ -446,6 +469,7 @@
     </main>
    </div>
   </div>
+
   <!-- Modal Input Kunjungan -->
   <div id="visit-modal" class="modal-layer" role="dialog">
    <div class="modal">
@@ -502,6 +526,7 @@
     </form>
    </div>
   </div>
+
   <!-- Modal QR Code Generator -->
   <div id="qr-modal" class="modal-layer" role="dialog">
    <div class="modal text-center">
@@ -526,6 +551,7 @@
     </div>
    </div>
   </div>
+
   <!-- Modal Tambah / Edit Anggota -->
   <div id="member-modal" class="modal-layer" role="dialog">
    <div class="modal">
@@ -544,13 +570,13 @@
       <div class="form-group"><label>Tanggal Lahir</label><input id="m-dob" class="field" type="date"></div>
       <div class="form-group"><label>Nomor Telepon</label><input id="m-phone" class="field" type="tel" placeholder="08xxxxxxxxxx"></div>
       <div class="form-group">
-        <label>Status Keanggotaan</label>
-        <select id="m-status" class="field">
-          <option value="Jemaat">Jemaat</option>
-          <option value="Simpatisan">Simpatisan</option>
-          <option value="Tamu">Tamu</option>
-        </select>
-      </div>
+  <label>Status Keanggotaan</label>
+  <select id="m-status" class="field">
+    <option value="Jemaat">Jemaat</option>
+    <option value="Simpatisan">Simpatisan</option>
+    <option value="Tamu">Tamu</option>
+  </select>
+</div>
       <div class="form-group full"><label>Alamat</label><textarea id="m-address" class="field textarea" placeholder="Alamat rumah jemaat"></textarea></div>
      </div>
      <div class="mt-4 flex justify-end gap-2">
@@ -560,22 +586,21 @@
     </form>
    </div>
   </div>
+
   <div id="toast" class="toast" role="status">
    <i data-lucide="check-circle" class="w-4 h-4"></i><span id="toast-msg" style="color: #fff; font-weight: 700;">Perubahan berhasil disimpan.</span>
   </div>
-  
+
   <script>
     const $ = id => document.getElementById(id);
     const DEFAULT_COMMISSIONS = ["Anggota Jemaat","Komisi Remaja","Komisi Sekolah Minggu","Komisi Alpha Course","Komisi Wanita"];
-    
-    // URL Web App Database Google Sheets
-    const urlDatabase = "https://script.google.com/macros/s/AKfycby6hzKGlbcJwSYZDuDu9C22KFmSe_C90rfm0TjuSzqvfBL7Kq7a1WhcSUt4IuKdDEzBiQ/exec";
     
     // Inisialisasi Data Default
     let records = JSON.parse(localStorage.getItem('gky_records')) || [
       { __backendId: 'm1', record_type: 'member', name: 'Budi Santoso', commission: 'Anggota Jemaat', pob: 'Singkawang', dob: '1988-05-12', phone: '08123456789', status: 'Aktif', address: 'Jl. Diponegoro No. 12' },
       { __backendId: 'm2', record_type: 'member', name: 'Siti Rahma', commission: 'Komisi Wanita', pob: 'Singkawang', dob: '1992-08-20', phone: '08987654321', status: 'Aktif', address: 'Jl. Pasiran No. 45' }
     ];
+
     let editingRecord = null;
     let editingVisitRecord = null;
     let html5QrcodeScanner = null;
@@ -589,21 +614,7 @@
     const attendances = () => records.filter(r => r.record_type === "attendance");
     const visits = () => records.filter(r => r.record_type === "visit");
 
-    // Fungsi Ambil Data dari Google Sheets (Cloud)
-    async function loadDataFromCloud() {
-      try {
-        let response = await fetch(urlDatabase);
-        let result = await response.json();
-        if(result && Array.isArray(result) && result.length > 0) {
-          records = result;
-          renderAll();
-        }
-      } catch(err) {
-        console.log("Gagal memuat dari cloud, menggunakan data lokal", err);
-      }
-    }
-
-    // Navigasi & Auth (Login & Register)
+    // Navigasi & Auth
     function switchAuthTab(type) {
       if(type === 'login') {
         $('login-form').classList.remove('hidden');
@@ -619,7 +630,7 @@
     }
 
     function handleLogin(e) {
-      if(e) e.preventDefault();
+      e.preventDefault();
       $('welcome').style.display = 'none';
       $('dashboard').classList.add('active');
       showToast('Berhasil masuk ke sistem');
@@ -627,7 +638,7 @@
     }
 
     function handleRegister(e) {
-      if(e) e.preventDefault();
+      e.preventDefault();
       showToast('Akun berhasil dibuat, silakan login!');
       switchAuthTab('login');
     }
@@ -645,6 +656,7 @@
     // Modal Manager
     function openModal(id) { $(id).classList.add('show'); }
     function closeModal(id) { $(id).classList.remove('show'); }
+
     function showToast(msg) {
       $('toast-msg').innerText = msg;
       $('toast').classList.add('show');
@@ -673,12 +685,9 @@
       openModal('member-modal');
     }
 
-    // Fungsi Simpan Anggota (Terhubung ke Google Sheets)
-    async function handleSaveMember(e) {
+    function handleSaveMember(e) {
       e.preventDefault();
       const data = {
-        action: "tambah_anggota",
-        __backendId: editingRecord ? editingRecord.__backendId : Date.now().toString(),
         record_type: 'member',
         name: $('m-name').value,
         commission: $('m-commission').value,
@@ -688,37 +697,23 @@
         status: $('m-status').value,
         address: $('m-address').value
       };
-      
-      showToast('Menyimpan ke Google Sheets...');
-      try {
-        await fetch(urlDatabase, {
-          method: 'POST',
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(data)
-        });
-        closeModal('member-modal');
-        showToast('Data anggota berhasil disimpan online!');
-        loadDataFromCloud();
-      } catch(err) {
-        showToast('Gagal menyimpan ke server.');
+
+      if(editingRecord) {
+        Object.assign(editingRecord, data);
+      } else {
+        data.__backendId = Date.now().toString();
+        records.push(data);
       }
+      saveData();
+      closeModal('member-modal');
+      showToast('Data anggota berhasil disimpan');
     }
 
-    // Fungsi Hapus Anggota (Terhubung ke Google Sheets)
-    async function deleteMember(id) {
+    function deleteMember(id) {
       if(confirm('Apakah Anda yakin ingin menghapus anggota ini?')) {
-        showToast('Menghapus data...');
-        try {
-          await fetch(urlDatabase, {
-            method: 'POST',
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify({ action: "delete", __backendId: id })
-          });
-          showToast('Anggota berhasil dihapus');
-          loadDataFromCloud();
-        } catch(err) {
-          showToast('Gagal menghapus dari server.');
-        }
+        records = records.filter(r => r.__backendId !== id);
+        saveData();
+        showToast('Anggota berhasil dihapus');
       }
     }
 
@@ -735,10 +730,12 @@
         width: 160,
         height: 160
       });
+
       setTimeout(() => {
         const img = $('qrcode-container').querySelector('img');
         if(img) $('download-qr-btn').href = img.src;
       }, 300);
+
       openModal('qr-modal');
     }
 
@@ -749,6 +746,7 @@
       populateVisitMemberSelect();
       openModal('visit-modal');
     }
+
     function populateVisitMemberSelect() {
       const sel = $('v-member-name');
       sel.innerHTML = '<option value="">-- Pilih Anggota --</option>';
@@ -756,6 +754,7 @@
         sel.innerHTML += `<option value="${m.name}">${m.name} (${m.commission})</option>`;
       });
     }
+
     function handleSaveVisit(e) {
       e.preventDefault();
       const data = {
@@ -767,12 +766,18 @@
         status: $('v-status').value,
         notes: $('v-notes').value
       };
-      data.__backendId = Date.now().toString();
-      records.push(data);
+
+      if(editingVisitRecord) {
+        Object.assign(editingVisitRecord, data);
+      } else {
+        data.__backendId = Date.now().toString();
+        records.push(data);
+      }
       saveData();
       closeModal('visit-modal');
       showToast('Kunjungan berhasil dicatat');
     }
+
     function deleteVisit(id) {
       if(confirm('Hapus catatan kunjungan ini?')) {
         records = records.filter(r => r.__backendId !== id);
@@ -816,21 +821,21 @@
       const q = ($('member-search').value || '').toLowerCase();
       const comm = $('member-commission-filter').value;
       const body = $('member-body');
-      if(!body) return;
       
       const filtered = members().filter(m => {
-        const matchQ = (m.name || '').toLowerCase().includes(q) || (m.address && m.address.toLowerCase().includes(q));
+        const matchQ = m.name.toLowerCase().includes(q) || (m.address && m.address.toLowerCase().includes(q));
         const matchComm = !comm || m.commission === comm;
         return matchQ && matchComm;
       });
+
       body.innerHTML = filtered.map(m => `
         <tr>
-          <td><strong>${m.name || '-'}</strong></td>
-          <td><span class="status">${m.commission || '-'}</span></td>
+          <td><strong>${m.name}</strong></td>
+          <td><span class="status">${m.commission}</span></td>
           <td>${m.pob || '-'}, ${m.dob || '-'}</td>
           <td>${m.phone || '-'}</td>
           <td>${m.address || '-'}</td>
-          <td><span class="status" style="background:${m.status==='Aktif'?'#e6f4ea':'#fce8e6'}; color:${m.status==='Aktif'?'#137333':'#c5221f'}">${m.status || 'Aktif'}</span></td>
+          <td><span class="status" style="background:${m.status==='Aktif'?'#e6f4ea':'#fce8e6'}; color:${m.status==='Aktif'?'#137333':'#c5221f'}">${m.status}</span></td>
           <td>
             <button class="link-btn" onclick="showMemberQR('${m.__backendId}')">QR</button>
             <button class="link-btn" onclick="openEditMemberModal('${m.__backendId}')">Edit</button>
@@ -838,38 +843,41 @@
           </td>
         </tr>
       `).join('');
+
       $('member-empty').classList.toggle('hidden', filtered.length > 0);
     }
 
     function renderVisits() {
       const mVal = parseInt($('recap-month').value);
       const yVal = parseInt($('recap-year').value);
+
       const filtered = visits().filter(v => {
         if(!v.date) return false;
         const d = new Date(v.date);
         return d.getMonth() === mVal && d.getFullYear() === yVal;
       });
-      if($('recap-count'))$('recap-count').innerText = filtered.length;
-      if($('recap-unique-members'))$('recap-unique-members').innerText = new Set(filtered.map(f => f.member_name)).size;
-      if($('recap-followup-count'))$('recap-followup-count').innerText = filtered.filter(f => f.status !== 'Selesai').length;
-      if($('visit-recap-body')) {$('visit-recap-body').innerHTML = filtered.map(v => `
-          <tr>
-            <td><strong>${v.member_name}</strong></td>
-            <td>${v.date}</td>
-            <td>${v.visitor}</td>
-            <td>${v.purpose}</td>
-            <td>${v.notes || '-'}</td>
-            <td><span class="status">${v.status}</span></td>
-            <td><button class="link-btn danger" onclick="deleteVisit('${v.__backendId}')">Hapus</button></td>
-          </tr>
-        `).join('');
-      }
-      if($('visit-recap-empty'))$('visit-recap-empty').classList.toggle('hidden', filtered.length > 0);
+
+      $('recap-count').innerText = filtered.length;
+      $('recap-unique-members').innerText = new Set(filtered.map(f => f.member_name)).size;
+      $('recap-followup-count').innerText = filtered.filter(f => f.status !== 'Selesai').length;
+
+      $('visit-recap-body').innerHTML = filtered.map(v => `
+        <tr>
+          <td><strong>${v.member_name}</strong></td>
+          <td>${v.date}</td>
+          <td>${v.visitor}</td>
+          <td>${v.purpose}</td>
+          <td>${v.notes || '-'}</td>
+          <td><span class="status">${v.status}</span></td>
+          <td><button class="link-btn danger" onclick="deleteVisit('${v.__backendId}')">Hapus</button></td>
+        </tr>
+      `).join('');
+
+      $('visit-recap-empty').classList.toggle('hidden', filtered.length > 0);
     }
 
     function renderAttendance() {
       const body = $('attendance-list-body');
-      if(!body) return;
       const atts = attendances();
       body.innerHTML = atts.map(a => `
         <tr>
@@ -879,24 +887,25 @@
           <td>${a.time}</td>
         </tr>
       `).join('');
-      if($('attendance-empty'))$('attendance-empty').classList.toggle('hidden', atts.length > 0);
+      $('attendance-empty').classList.toggle('hidden', atts.length > 0);
     }
 
-    // Laporan & Export
+    // --- FITUR REKAP LAPORAN (Mingguan, Bulanan, Tahunan) & EXPORT ---
     function toggleReportFilters() {
       const p = $('rpt-period').value;
       $('rpt-filter-date').classList.toggle('hidden', p !== 'weekly');$('rpt-filter-month').classList.toggle('hidden', p === 'weekly');
     }
 
     function generateReport() {
-      const category = $('rpt-category') ?$('rpt-category').value : 'members';
-      const period = $('rpt-period') ?$('rpt-period').value : 'monthly';
+      const category = $('rpt-category').value;
+      const period = $('rpt-period').value;
       const head = $('report-table-head');
       const body = $('report-table-body');
-      if(!head || !body) return;
       
       let filteredData = [];
       let title = "";
+
+      // Logic Filtering Berdasarkan Periode
       if(category === 'attendance') {
         title = "Laporan Rekapitulasi Kehadiran Jemaat";
         filteredData = attendances().filter(a => filterByPeriod(a.date, period));
@@ -907,9 +916,11 @@
         title = "Laporan Database Anggota Jemaat";
         filteredData = members();
       }
-      if($('rpt-header-title'))$('rpt-header-title').innerText = title;
-      if($('rpt-header-sub'))$('rpt-header-sub').innerText = `Tipe Laporan: ${period.toUpperCase()} | Total Data: ${filteredData.length}`;
-      
+
+      $('rpt-header-title').innerText = title;
+      $('rpt-header-sub').innerText = `Tipe Laporan: ${period.toUpperCase()} | Total Data: ${filteredData.length}`;
+
+      // Render Table
       if(category === 'attendance') {
         head.innerHTML = `<tr><th>No</th><th>Tanggal</th><th>Nama Jemaat</th><th>Layanan</th><th>Waktu Absen</th></tr>`;
         body.innerHTML = filteredData.map((d, i) => `
@@ -923,7 +934,7 @@
       } else {
         head.innerHTML = `<tr><th>No</th><th>Nama Lengkap</th><th>Komisi</th><th>Telepon</th><th>Status</th><th>Alamat</th></tr>`;
         body.innerHTML = filteredData.map((d, i) => `
-          <tr><td>${i+1}</td><td>${d.name || '-'}</td><td>${d.commission || '-'}</td><td>${d.phone || '-'}</td><td>${d.status || 'Aktif'}</td><td>${d.address || '-'}</td></tr>
+          <tr><td>${i+1}</td><td>${d.name}</td><td>${d.commission}</td><td>${d.phone || '-'}</td><td>${d.status}</td><td>${d.address || '-'}</td></tr>
         `).join('');
       }
     }
@@ -931,6 +942,7 @@
     function filterByPeriod(dateStr, period) {
       if(!dateStr) return false;
       const d = new Date(dateStr);
+      
       if(period === 'weekly') {
         const start = $('rpt-start-date').value ? new Date($('rpt-start-date').value) : new Date(Date.now() - 7*24*60*60*1000);
         const end = new Date(start);
@@ -947,9 +959,11 @@
       return true;
     }
 
+    // Export Laporan (Excel CSV, Word DOC, PDF)
     function exportReport(type) {
       const table = $('report-table');
-      const title = $('rpt-header-title') ?$('rpt-header-title').innerText : 'Laporan';
+      const title = $('rpt-header-title').innerText;
+
       if (type === 'excel') {
         let csv = [];
         for (let row of table.rows) {
@@ -976,8 +990,17 @@
         const printWin = window.open('', '', 'width=800,height=600');
         printWin.document.write(`
           <html><head><title>${title}</title>
-          <style>body{font-family:sans-serif;padding:20px;}table{width:100%;border-collapse:collapse;margin-top:15px;}th,td{border:1px solid #ccc;padding:8px;text-align:left;font-size:12px;}th{background:#f2f2f2;}</style>
-          </head><body><h2>${title}</h2><p>${$('rpt-header-sub').innerText}</p>${table.outerHTML}</body></html>
+          <style>
+            body{font-family:sans-serif;padding:20px;}
+            table{width:100%;border-collapse:collapse;margin-top:15px;}
+            th,td{border:1px solid #ccc;padding:8px;text-align:left;font-size:12px;}
+            th{background:#f2f2f2;}
+          </style>
+          </head><body>
+          <h2>${title}</h2>
+          <p>${$('rpt-header-sub').innerText}</p>
+          ${table.outerHTML}
+          </body></html>
         `);
         printWin.document.close();
         printWin.focus();
@@ -986,56 +1009,60 @@
       }
     }
 
+    // Init & Populate Filters
     function setupReportFilters() {
       const months = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
       const rptM = $('rpt-month');
       const rptY = $('rpt-year');
       const recapY = $('recap-year');
+      
       const currentYear = new Date().getFullYear();
       const currentMonth = new Date().getMonth();
+
+      rptM.innerHTML = months.map((m, i) => `<option value="${i}" ${i===currentMonth?'selected':''}>${m}</option>`).join('');
       
-      if(rptM) rptM.innerHTML = months.map((m, i) => `<option value="${i}" ${i===currentMonth?'selected':''}>${m}</option>`).join('');
       let yearOpts = '';
       for(let y = currentYear - 3; y <= currentYear + 2; y++) {
         yearOpts += `<option value="${y}" ${y===currentYear?'selected':''}>${y}</option>`;
       }
-      if(rptY) rptY.innerHTML = yearOpts;
-      if(recapY) recapY.innerHTML = yearOpts;
-      if($('rpt-start-date'))$('rpt-start-date').value = new Date().toISOString().split('T')[0];
+      rptY.innerHTML = yearOpts;
+      recapY.innerHTML = yearOpts;
+
+      // Set default start date mingguan
+      const today = new Date();
+      $('rpt-start-date').value = today.toISOString().split('T')[0];
     }
 
     function renderAll() {
-      if($('metric-members'))$('metric-members').innerText = members().length;
-      if($('metric-commissions'))$('metric-commissions').innerText = DEFAULT_COMMISSIONS.length;
-      if($('metric-attendance'))$('metric-attendance').innerText = attendances().length;
-      if($('metric-visits'))$('metric-visits').innerText = visits().length;
-      
-      if($('commission-cards')) {$('commission-cards').innerHTML = DEFAULT_COMMISSIONS.map(c => {
-          const count = members().filter(m => m.commission === c).length;
-          return `<div class="card bg-slate-50 border text-center p-3"><p class="text-xs text-slate-500 font-bold">${c}</p><strong class="text-xl text-slate-800">${count}</strong></div>`;
-        }).join('');
-      }
-      
+      $('metric-members').innerText = members().length;
+      $('metric-commissions').innerText = DEFAULT_COMMISSIONS.length;
+      $('metric-attendance').innerText = attendances().length;
+      $('metric-visits').innerText = visits().length;
+
+      // Render Cards Komisi
+      $('commission-cards').innerHTML = DEFAULT_COMMISSIONS.map(c => {
+        const count = members().filter(m => m.commission === c).length;
+        return `<div class="card bg-slate-50 border text-center p-3"><p class="text-xs text-slate-500 font-bold">${c}</p><strong class="text-xl text-slate-800">${count}</strong></div>`;
+      }).join('');
+
       renderMembers();
       renderVisits();
       renderAttendance();
       generateReport();
     }
 
-    // Inisialisasi Aplikasi Saat Halaman Selesai Ditingkatkan
+    // Event Navigation View Switching
     document.addEventListener('DOMContentLoaded', () => {
       setupReportFilters();
-      
-      // Ambil data Google Sheets secara asynchronous di latar belakang
-      loadDataFromCloud();
 
+      // Populate Commission Selects
       const mComm = $('m-commission');
       const filterComm = $('member-commission-filter');
       
-      if(filterComm) filterComm.innerHTML = '<option value="">Semua Komisi</option>';
+      filterComm.innerHTML = '<option value="">Semua Komisi</option>';
       DEFAULT_COMMISSIONS.forEach(c => {
-        if(mComm) mComm.innerHTML += `<option value="${c}">${c}</option>`;
-        if(filterComm) filterComm.innerHTML += `<option value="${c}">${c}</option>`;
+        mComm.innerHTML += `<option value="${c}">${c}</option>`;
+        filterComm.innerHTML += `<option value="${c}">${c}</option>`;
       });
 
       document.querySelectorAll('.nav-link[data-view]').forEach(btn => {
@@ -1045,17 +1072,74 @@
           
           btn.classList.add('active');
           const viewId = btn.getAttribute('data-view');
-          if($(viewId))$(viewId).classList.add('active');
-          if($('page-heading-title'))$('page-heading-title').innerText = btn.querySelector('span').innerText;
+          $(viewId).classList.add('active');$('page-heading-title').innerText = btn.querySelector('span').innerText;
+
           if(window.innerWidth <= 820) $('sidebar').classList.remove('open');
           
           if(viewId === 'reports-view') generateReport();
         });
       });
 
-      if(window.lucide) lucide.createIcons();
+      lucide.createIcons();
       renderAll();
     });
   </script>
+</body>
+</html>
+<script>
+        // Paste kode 'async function simpanAnggota(event)' di sini
+        async function simpanAnggota(event) {
+            event.preventDefault();
+
+            const urlDatabase = "https://script.google.com/macros/s/AKfycbzEXT3EMcFAklpeeBFGm8VjLUaJieAj-IOXzTGmIf1wXEam7W1Mb_V7ZPphk2O5ikEzxw/exec";
+
+            const dataAnggota = {
+                action: "tambah_anggota",
+                id: "MEMBER-" + Math.floor(Math.random() * 10000),
+                nama: document.getElementById('m-name')?.value || "",
+                komisi: document.getElementById('m-commission')?.value || "",
+                tempat_lahir: document.getElementById('m-pob')?.value || "",
+                tgl_lahir: document.getElementById('m-dob')?.value || "",
+                telepon: document.getElementById('m-phone')?.value || "",
+                status: document.getElementById('m-status')?.value || ""
+            };
+
+            const tombol = event.target.querySelector('button[type="submit"]') || event.target.querySelector('button');
+            const teksAwal = tombol ? tombol.innerText : "Simpan Data";
+            
+            if (tombol) {
+                tombol.innerText = "Menyimpan...";
+                tombol.disabled = true;
+            }
+
+            try {
+                const kirim = await fetch(urlDatabase, {
+                    method: 'POST',
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify(dataAnggota)
+                });
+
+                const respon = await kirim.json();
+
+                if (respon.status === "success") {
+                    alert("Berhasil! Data telah masuk ke Google Sheets.");
+                    event.target.reset();
+                    if (typeof closeModal === 'function') {
+                        closeModal('member-modal');
+                    }
+                } else {
+                    alert("Gagal menyimpan: " + (respon.pesan || "Terjadi kesalahan server."));
+                }
+            } catch (error) {
+                console.error("Detail Error:", error);
+                alert("Gagal mengirim data. Pastikan koneksi internet menyala.");
+            } finally {
+                if (tombol) {
+                    tombol.innerText = teksAwal;
+                    tombol.disabled = false;
+                }
+            }
+        }
+    </script>
 </body>
 </html>
