@@ -596,8 +596,8 @@
     const $ = id => document.getElementById(id);
     const DEFAULT_COMMISSIONS = ["Hamba Tuhan", "Anggota Jemaat", "Komisi Remaja", "Komisi Sekolah Minggu", "Komisi Alpha Course", "Komisi Wanita", "MOONCAKE"];
     
-    // URL Web App Google Apps Script Anda
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRolmz-pxwtlXKp6OJ5kDCRPPh1ViQlp2eUQLlJxjK0tZPcyuqj4WZDVx28C7S8B7wOg/exec";
+    // URL Web App Google Apps Script terbaru Anda
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxglTa3z-ba50c-l6VB4OlY_4jOqMZ2NnALjHvNvnMAAtDyhbBYMkp_282h27bbdxXpmw/exec";
 
     let records = [];
     let editingRecord = null;
@@ -613,14 +613,13 @@
         if (result && Array.isArray(result.data)) {
           records = result.data;
         } else {
-          // Fallback jika kosong / struktur berbeda
           records = [];
         }
         renderAll();
         showToast('Data berhasil disinkronisasi!');
       } catch (err) {
         console.error('Gagal mengambil data:', err);
-        showToast('Gagal memuat dari Cloud. Menggunakan cache lokal.');
+        showToast('Gagal memuat dari Cloud.');
       }
     }
 
@@ -628,7 +627,7 @@
     async function saveDataToCloud(newData, actionType) {
       try {
         const payload = {
-          action: actionType, // contoh: 'tambah_anggota', 'tambah_absen', 'tambah_kunjungan', dll
+          action: actionType,
           ...newData
         };
 
@@ -738,7 +737,7 @@
       showToast('Menyimpan ke Google Sheets...');
       const success = await saveDataToCloud(data, editingRecord ? 'edit_anggota' : 'tambah_anggota');
       
-      if(success || true) { // Optimistic update
+      if(success || true) {
         if(editingRecord) {
           Object.assign(editingRecord, data);
         } else {
@@ -1097,7 +1096,7 @@
       });
 
       lucide.createIcons();
-      loadDataFromCloud(); // Ambil data awal dari Google Sheets
+      loadDataFromCloud();
     });
   </script>
 </body>
