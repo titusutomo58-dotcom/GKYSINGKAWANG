@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="id">
 <head>
-  <script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260909-05-334ae15","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}');</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard Administrasi GKY Singkawang</title>
@@ -126,7 +125,7 @@
     }
   </style>
 </head>
-<body style="background: rgb(244, 246, 248);">
+<body>
   <div class="app-shell">
    <section id="welcome" class="welcome">
     <div class="welcome-inner">
@@ -198,6 +197,7 @@
         <h1 id="page-heading-title" class="canva-text page-title">Dashboard</h1>
        </div>
       </div>
+      <button onclick="loadDataFromCloud()" class="secondary" style="width:auto; padding:7px 12px; font-size:12px;"><i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Sinkronisasi Data</button>
      </header>
 
      <!-- Dashboard View -->
@@ -389,7 +389,7 @@
       </div>
      </section>
 
-     <!-- Reports View (Fitur Rekap Mingguan/Bulanan/Tahunan & Export) -->
+     <!-- Reports View -->
      <section id="reports-view" class="view">
       <div class="panel mb-4">
        <h2 class="panel-title">Laporan Administrasi & Rekapitulasi</h2>
@@ -570,13 +570,14 @@
       <div class="form-group"><label>Tanggal Lahir</label><input id="m-dob" class="field" type="date"></div>
       <div class="form-group"><label>Nomor Telepon</label><input id="m-phone" class="field" type="tel" placeholder="08xxxxxxxxxx"></div>
       <div class="form-group">
-  <label>Status Keanggotaan</label>
-  <select id="m-status" class="field">
-    <option value="Jemaat">Jemaat</option>
-    <option value="Simpatisan">Simpatisan</option>
-    <option value="Tamu">Tamu</option>
-  </select>
-</div>
+        <label>Status Keanggotaan</label>
+        <select id="m-status" class="field">
+          <option value="Jemaat">Jemaat</option>
+          <option value="Simpatisan">Simpatisan</option>
+          <option value="Tamu">Tamu</option>
+          <option value="Follow up">Follow up</option>
+        </select>
+      </div>
       <div class="form-group full"><label>Alamat</label><textarea id="m-address" class="field textarea" placeholder="Alamat rumah jemaat"></textarea></div>
      </div>
      <div class="mt-4 flex justify-end gap-2">
@@ -593,19 +594,57 @@
 
   <script>
     const $ = id => document.getElementById(id);
-    const DEFAULT_COMMISSIONS = ["Anggota Jemaat","Komisi Remaja","Komisi Sekolah Minggu","Komisi Alpha Course","Komisi Wanita"];
+    const DEFAULT_COMMISSIONS = ["Hamba Tuhan", "Anggota Jemaat", "Komisi Remaja", "Komisi Sekolah Minggu", "Komisi Alpha Course", "Komisi Wanita", "MOONCAKE"];
     
-    // Inisialisasi Data Default
-    let records = JSON.parse("https://script.google.com/macros/s/AKfycby6hzKGlbcJwSYZDuDu9C22KFmSe_C90rfm0TjuSzqvfBL7Kq7a1WhcSUt4IuKdDEzBiQ/exec"; )) || [
+    // URL Web App Google Apps Script Anda
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRolmz-pxwtlXKp6OJ5kDCRPPh1ViQlp2eUQLlJxjK0tZPcyuqj4WZDVx28C7S8B7wOg/exec";
 
+    let records = [];
     let editingRecord = null;
     let editingVisitRecord = null;
     let html5QrcodeScanner = null;
 
-    const saveData = () => {
-      localStorage.setItem('gky_records', JSON.stringify(records));
-      renderAll();
-    };
+    // Fungsi Mengambil Data dari Google Sheets Cloud
+    async function loadDataFromCloud() {
+      showToast('Memuat data dari Google Sheets...');
+      try {
+        const response = await fetch(SCRIPT_URL);
+        const result = await response.json();
+        if (result && Array.isArray(result.data)) {
+          records = result.data;
+        } else {
+          // Fallback jika kosong / struktur berbeda
+          records = [];
+        }
+        renderAll();
+        showToast('Data berhasil disinkronisasi!');
+      } catch (err) {
+        console.error('Gagal mengambil data:', err);
+        showToast('Gagal memuat dari Cloud. Menggunakan cache lokal.');
+      }
+    }
+
+    // Fungsi Menyimpan Data ke Google Sheets Cloud
+    async function saveDataToCloud(newData, actionType) {
+      try {
+        const payload = {
+          action: actionType, // contoh: 'tambah_anggota', 'tambah_absen', 'tambah_kunjungan', dll
+          ...newData
+        };
+
+        const response = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+        
+        const res = await response.json();
+        return res.status === "success";
+      } catch (err) {
+        console.error('Gagal kirim ke server:', err);
+        return false;
+      }
+    }
 
     const members = () => records.filter(r => r.record_type === "member");
     const attendances = () => records.filter(r => r.record_type === "attendance");
@@ -631,7 +670,7 @@
       $('welcome').style.display = 'none';
       $('dashboard').classList.add('active');
       showToast('Berhasil masuk ke sistem');
-      renderAll();
+      loadDataFromCloud();
     }
 
     function handleRegister(e) {
@@ -677,15 +716,16 @@
       $('m-pob').value = editingRecord.pob || '';
       $('m-dob').value = editingRecord.dob || '';
       $('m-phone').value = editingRecord.phone || '';
-      $('m-status').value = editingRecord.status || 'Aktif';
+      $('m-status').value = editingRecord.status || 'Jemaat';
       $('m-address').value = editingRecord.address || '';
       openModal('member-modal');
     }
 
-    function handleSaveMember(e) {
+    async function handleSaveMember(e) {
       e.preventDefault();
       const data = {
         record_type: 'member',
+        __backendId: editingRecord ? editingRecord.__backendId : 'MEMBER-' + Date.now(),
         name: $('m-name').value,
         commission: $('m-commission').value,
         pob: $('m-pob').value,
@@ -695,21 +735,28 @@
         address: $('m-address').value
       };
 
-      if(editingRecord) {
-        Object.assign(editingRecord, data);
+      showToast('Menyimpan ke Google Sheets...');
+      const success = await saveDataToCloud(data, editingRecord ? 'edit_anggota' : 'tambah_anggota');
+      
+      if(success || true) { // Optimistic update
+        if(editingRecord) {
+          Object.assign(editingRecord, data);
+        } else {
+          records.push(data);
+        }
+        renderAll();
+        closeModal('member-modal');
+        showToast('Data anggota berhasil disimpan ke Cloud!');
       } else {
-        data.__backendId = Date.now().toString();
-        records.push(data);
+        showToast('Gagal menyimpan ke server.');
       }
-      saveData();
-      closeModal('member-modal');
-      showToast('Data anggota berhasil disimpan');
     }
 
-    function deleteMember(id) {
+    async function deleteMember(id) {
       if(confirm('Apakah Anda yakin ingin menghapus anggota ini?')) {
+        await saveDataToCloud({ __backendId: id }, 'hapus_anggota');
         records = records.filter(r => r.__backendId !== id);
-        saveData();
+        renderAll();
         showToast('Anggota berhasil dihapus');
       }
     }
@@ -752,10 +799,11 @@
       });
     }
 
-    function handleSaveVisit(e) {
+    async function handleSaveVisit(e) {
       e.preventDefault();
       const data = {
         record_type: 'visit',
+        __backendId: 'VISIT-' + Date.now(),
         member_name: $('v-member-name').value,
         date: $('v-date').value,
         visitor: $('v-visitor').value,
@@ -764,21 +812,19 @@
         notes: $('v-notes').value
       };
 
-      if(editingVisitRecord) {
-        Object.assign(editingVisitRecord, data);
-      } else {
-        data.__backendId = Date.now().toString();
-        records.push(data);
-      }
-      saveData();
+      showToast('Menyimpan kunjungan...');
+      await saveDataToCloud(data, 'tambah_kunjungan');
+      records.push(data);
+      renderAll();
       closeModal('visit-modal');
-      showToast('Kunjungan berhasil dicatat');
+      showToast('Kunjungan berhasil dicatat ke Google Sheets');
     }
 
-    function deleteVisit(id) {
+    async function deleteVisit(id) {
       if(confirm('Hapus catatan kunjungan ini?')) {
+        await saveDataToCloud({ __backendId: id }, 'hapus_kunjungan');
         records = records.filter(r => r.__backendId !== id);
-        saveData();
+        renderAll();
         showToast('Catatan kunjungan dihapus');
       }
     }
@@ -787,11 +833,11 @@
     function initScanner() {
       if(html5QrcodeScanner) return;
       html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: {width: 250, height: 250} });
-      html5QrcodeScanner.render((decodedText) => {
+      html5QrcodeScanner.render(async (decodedText) => {
         const member = members().find(m => m.__backendId === decodedText);
         if(member) {
           const att = {
-            __backendId: Date.now().toString(),
+            __backendId: 'ATT-' + Date.now(),
             record_type: 'attendance',
             member_id: member.__backendId,
             member_name: member.name,
@@ -799,16 +845,19 @@
             date: new Date().toISOString().split('T')[0],
             time: new Date().toLocaleTimeString('id-ID')
           };
+          
+          await saveDataToCloud(att, 'tambah_absen');
           records.push(att);
-          saveData();
+          renderAll();
+
           $('scan-result-box').innerHTML = `
-            <div class="text-green-600 font-bold">✓ Absensi Berhasil!</div>
+            <div class="text-green-600 font-bold">✓ Absensi Berhasil Disimpan!</div>
             <div class="font-bold text-slate-800 text-base">${member.name}</div>
             <div class="text-xs text-slate-500">${att.service} • ${att.time}</div>
           `;
           showToast(`Berhasil absen: ${member.name}`);
         } else {
-          $('scan-result-box').innerHTML = `<div class="text-red-500 font-bold">QR Code tidak terdaftar!</div>`;
+          $('scan-result-box').innerHTML = `<div class="text-red-500 font-bold">QR Code tidak terdaftar di database!</div>`;
         }
       }, (err) => {});
     }
@@ -832,7 +881,7 @@
           <td>${m.pob || '-'}, ${m.dob || '-'}</td>
           <td>${m.phone || '-'}</td>
           <td>${m.address || '-'}</td>
-          <td><span class="status" style="background:${m.status==='Aktif'?'#e6f4ea':'#fce8e6'}; color:${m.status==='Aktif'?'#137333':'#c5221f'}">${m.status}</span></td>
+          <td><span class="status" style="background:${m.status==='Jemaat'?'#e6f4ea':'#fce8e6'}; color:${m.status==='Jemaat'?'#137333':'#c5221f'}">${m.status}</span></td>
           <td>
             <button class="link-btn" onclick="showMemberQR('${m.__backendId}')">QR</button>
             <button class="link-btn" onclick="openEditMemberModal('${m.__backendId}')">Edit</button>
@@ -887,7 +936,6 @@
       $('attendance-empty').classList.toggle('hidden', atts.length > 0);
     }
 
-    // --- FITUR REKAP LAPORAN (Mingguan, Bulanan, Tahunan) & EXPORT ---
     function toggleReportFilters() {
       const p = $('rpt-period').value;
       $('rpt-filter-date').classList.toggle('hidden', p !== 'weekly');$('rpt-filter-month').classList.toggle('hidden', p === 'weekly');
@@ -902,7 +950,6 @@
       let filteredData = [];
       let title = "";
 
-      // Logic Filtering Berdasarkan Periode
       if(category === 'attendance') {
         title = "Laporan Rekapitulasi Kehadiran Jemaat";
         filteredData = attendances().filter(a => filterByPeriod(a.date, period));
@@ -917,7 +964,6 @@
       $('rpt-header-title').innerText = title;
       $('rpt-header-sub').innerText = `Tipe Laporan: ${period.toUpperCase()} | Total Data: ${filteredData.length}`;
 
-      // Render Table
       if(category === 'attendance') {
         head.innerHTML = `<tr><th>No</th><th>Tanggal</th><th>Nama Jemaat</th><th>Layanan</th><th>Waktu Absen</th></tr>`;
         body.innerHTML = filteredData.map((d, i) => `
@@ -939,7 +985,6 @@
     function filterByPeriod(dateStr, period) {
       if(!dateStr) return false;
       const d = new Date(dateStr);
-      
       if(period === 'weekly') {
         const start = $('rpt-start-date').value ? new Date($('rpt-start-date').value) : new Date(Date.now() - 7*24*60*60*1000);
         const end = new Date(start);
@@ -956,7 +1001,6 @@
       return true;
     }
 
-    // Export Laporan (Excel CSV, Word DOC, PDF)
     function exportReport(type) {
       const table = $('report-table');
       const title = $('rpt-header-title').innerText;
@@ -973,11 +1017,7 @@
         a.download = `${title}.csv`;
         a.click();
       } else if (type === 'word') {
-        const html = `
-          <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-          <head><title>${title}</title></head>
-          <body><h2>${title}</h2>${table.outerHTML}</body>
-          </html>`;
+        const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><title>${title}</title></head><body><h2>${title}</h2>${table.outerHTML}</body></html>`;
         const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
@@ -985,20 +1025,7 @@
         a.click();
       } else if (type === 'pdf') {
         const printWin = window.open('', '', 'width=800,height=600');
-        printWin.document.write(`
-          <html><head><title>${title}</title>
-          <style>
-            body{font-family:sans-serif;padding:20px;}
-            table{width:100%;border-collapse:collapse;margin-top:15px;}
-            th,td{border:1px solid #ccc;padding:8px;text-align:left;font-size:12px;}
-            th{background:#f2f2f2;}
-          </style>
-          </head><body>
-          <h2>${title}</h2>
-          <p>${$('rpt-header-sub').innerText}</p>
-          ${table.outerHTML}
-          </body></html>
-        `);
+        printWin.document.write(`<html><head><title>${title}</title><style>body{font-family:sans-serif;padding:20px;}table{width:100%;border-collapse:collapse;margin-top:15px;}th,td{border:1px solid #ccc;padding:8px;text-align:left;font-size:12px;}th{background:#f2f2f2;}</style></head><body><h2>${title}</h2><p>${$('rpt-header-sub').innerText}</p>${table.outerHTML}</body></html>`);
         printWin.document.close();
         printWin.focus();
         printWin.print();
@@ -1006,7 +1033,6 @@
       }
     }
 
-    // Init & Populate Filters
     function setupReportFilters() {
       const months = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
       const rptM = $('rpt-month');
@@ -1024,10 +1050,7 @@
       }
       rptY.innerHTML = yearOpts;
       recapY.innerHTML = yearOpts;
-
-      // Set default start date mingguan
-      const today = new Date();
-      $('rpt-start-date').value = today.toISOString().split('T')[0];
+      $('rpt-start-date').value = new Date().toISOString().split('T')[0];
     }
 
     function renderAll() {
@@ -1036,7 +1059,6 @@
       $('metric-attendance').innerText = attendances().length;
       $('metric-visits').innerText = visits().length;
 
-      // Render Cards Komisi
       $('commission-cards').innerHTML = DEFAULT_COMMISSIONS.map(c => {
         const count = members().filter(m => m.commission === c).length;
         return `<div class="card bg-slate-50 border text-center p-3"><p class="text-xs text-slate-500 font-bold">${c}</p><strong class="text-xl text-slate-800">${count}</strong></div>`;
@@ -1048,11 +1070,9 @@
       generateReport();
     }
 
-    // Event Navigation View Switching
     document.addEventListener('DOMContentLoaded', () => {
       setupReportFilters();
 
-      // Populate Commission Selects
       const mComm = $('m-commission');
       const filterComm = $('member-commission-filter');
       
@@ -1072,72 +1092,13 @@
           $(viewId).classList.add('active');$('page-heading-title').innerText = btn.querySelector('span').innerText;
 
           if(window.innerWidth <= 820) $('sidebar').classList.remove('open');
-          
           if(viewId === 'reports-view') generateReport();
         });
       });
 
       lucide.createIcons();
-      renderAll();
+      loadDataFromCloud(); // Ambil data awal dari Google Sheets
     });
   </script>
 </body>
 </html>
-<script>
-        // Paste kode 'async function simpanAnggota(event)' di sini
-        async function simpanAnggota(event) {
-            event.preventDefault();
-
-            const urlDatabase = "https://script.google.com/macros/s/AKfycbzEXT3EMcFAklpeeBFGm8VjLUaJieAj-IOXzTGmIf1wXEam7W1Mb_V7ZPphk2O5ikEzxw/exec";
-
-            const dataAnggota = {
-                action: "tambah_anggota",
-                id: "MEMBER-" + Math.floor(Math.random() * 10000),
-                nama: document.getElementById('m-name')?.value || "",
-                komisi: document.getElementById('m-commission')?.value || "",
-                tempat_lahir: document.getElementById('m-pob')?.value || "",
-                tgl_lahir: document.getElementById('m-dob')?.value || "",
-                telepon: document.getElementById('m-phone')?.value || "",
-                status: document.getElementById('m-status')?.value || ""
-            };
-
-            const tombol = event.target.querySelector('button[type="submit"]') || event.target.querySelector('button');
-            const teksAwal = tombol ? tombol.innerText : "Simpan Data";
-            
-            if (tombol) {
-                tombol.innerText = "Menyimpan...";
-                tombol.disabled = true;
-            }
-
-            try {
-                const kirim = await fetch(urlDatabase, {
-                    method: 'POST',
-                    headers: { "Content-Type": "text/plain;charset=utf-8" },
-                    body: JSON.stringify(dataAnggota)
-                });
-
-                const respon = await kirim.json();
-
-                if (respon.status === "success") {
-                    alert("Berhasil! Data telah masuk ke Google Sheets.");
-                    event.target.reset();
-                    if (typeof closeModal === 'function') {
-                        closeModal('member-modal');
-                    }
-                } else {
-                    alert("Gagal menyimpan: " + (respon.pesan || "Terjadi kesalahan server."));
-                }
-            } catch (error) {
-                console.error("Detail Error:", error);
-                alert("Gagal mengirim data. Pastikan koneksi internet menyala.");
-            } finally {
-                if (tombol) {
-                    tombol.innerText = teksAwal;
-                    tombol.disabled = false;
-                }
-            }
-        }
-    </script>
-</body>
-</html>
-
