@@ -804,16 +804,29 @@
     }
 
     async function handleSaveVisit(e) {
-      e.preventDefault();
-      const data = {
-        record_type: 'visit',
-        __backendId: 'VISIT-' + Date.now(),
-        member_name: $('v-member-name').value,
-        date: $('v-date').value,
-        visitor: $('v-visitor').value,
-        purpose: $('v-purpose').value,
-        status: $('v-status').value,
-        notes: $('v-notes').value
+  e.preventDefault();
+  const data = {
+    record_type: 'visit',
+    __backendId: 'VISIT-' + Date.now(),
+    member_name: $('v-member-name').value,
+    date: $('v-date').value,
+    visitor: $('v-visitor').value,
+    purpose: $('v-purpose').value,
+    status: $('v-status').value,
+    notes: $('v-notes').value
+  };
+
+  showToast('Menyimpan kunjungan...');
+  const success = await saveDataToCloud(data, 'tambah_kunjungan');
+  
+  if(success) {
+    await loadDataFromCloud(); // Tarik data terbaru dari Cloud agar tidak hilang saat refresh
+    closeModal('visit-modal');
+    showToast('Kunjungan berhasil dicatat dan disimpan ke Cloud!');
+  } else {
+    showToast('Gagal menyimpan ke server.');
+  }
+}
       };
 
       showToast('Menyimpan kunjungan...');
