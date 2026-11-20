@@ -8,7 +8,6 @@
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,600;9..144,700&amp;display=swap" rel="stylesheet">
   <style>
     :root{
@@ -23,7 +22,6 @@
     button:disabled{cursor:not-allowed;opacity:.65}
     .app-shell{width:100%;min-height:100vh}
     .serif{font-family:"Fraunces",serif}
-
     .welcome{
       min-height:100vh;
       display:flex;align-items:center;justify-content:center;padding:20px;
@@ -34,7 +32,6 @@
     .logo-halo{width:90px;height:90px;margin:auto;padding:6px;border-radius:50%;background:transparent}
     .logo-halo img{width:100%;height:100%;object-fit:contain;border-radius:50%;display:block;background:white;}
     .gold-rule{width:72px;height:1px;background:#e7c474;margin:15px auto}
-
     .primary,.secondary,.danger-button{
       border:0;border-radius:10px;padding:11px 15px;font-weight:700;display:inline-flex;
       gap:7px;align-items:center;justify-content:center;transition:.2s ease;width:100%;
@@ -45,7 +42,6 @@
     .secondary:hover{background:#f7fafc}
     .danger-button{background:#fdf0f0;color:#9e3030;border:1px solid #f0cccc}
     .danger-button:hover{background:#f9dddd}
-
     .dashboard{display:none;min-height:100vh}
     .dashboard.active{display:flex}
     .sidebar{
@@ -93,7 +89,6 @@
     .link-btn{border:0;background:transparent;padding:4px 6px;color:#174d78;font-weight:700;font-size:12px}
     .link-btn.danger{color:#a53535}
     .mobile{display:none;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px}
-
     .modal-layer{display:none;position:fixed;z-index:70;inset:0;background:#03172b99;padding:16px;align-items:center;justify-content:center}
     .modal-layer.show{display:flex}
     .modal{width:min(100%,540px);max-height:90vh;overflow-y:auto;background:#fff;border-radius:16px;padding:20px}
@@ -101,9 +96,7 @@
     .close{border:0;background:#edf2f5;border-radius:50%;width:32px;height:32px;display:grid;place-items:center}
     .toast{position:fixed;right:16px;bottom:16px;z-index:90;display:none;align-items:center;gap:9px;padding:12px 16px;background:#173f35;color:#fff;border-radius:10px;box-shadow:0 14px 30px #001b1533;font-size:13px;font-weight:700}
     .toast.show{display:flex;animation:toastIn .25s ease}
-
     @keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-
     @media(max-width:1024px){
       .grid4{grid-template-columns:repeat(2,minmax(0,1fr))}
       .content-grid{grid-template-columns:1fr}
@@ -138,7 +131,6 @@
          <button type="button" id="tab-login-btn" onclick="switchAuthTab('login')" class="flex-1 py-1.5 text-xs font-bold rounded bg-amber-500 text-slate-900 transition">Login</button>
          <button type="button" id="tab-register-btn" onclick="switchAuthTab('register')" class="flex-1 py-1.5 text-xs font-bold rounded bg-slate-700 text-white transition">Buat Akun</button>
        </div>
-
        <form id="login-form" class="space-y-3" onsubmit="handleLogin(event)">
          <div class="form-group">
            <label style="color:#e2e8f0; font-size:11px;">Username / Email</label>
@@ -150,7 +142,6 @@
          </div>
          <button type="submit" class="primary mt-1" style="padding:10px; font-size:13px;">MASUK SISTEM</button>
        </form>
-
        <form id="register-form" class="space-y-3 hidden" onsubmit="handleRegister(event)">
          <div class="form-group">
            <label style="color:#e2e8f0; font-size:11px;">Nama Lengkap</label>
@@ -171,7 +162,6 @@
      <p class="canva-text serif italic" style="color: rgb(255, 255, 255); font-weight: 400; font-size: 12px;">“Menjadi Gereja yang Mulia dan Misioner”</p>
     </div>
    </section>
-
    <div id="dashboard" class="dashboard">
     <aside id="sidebar" class="sidebar">
      <div class="brand"><img class="canva-image" src="Logo_Gereja_Kristus_Yesus.jpg" alt="Logo" onerror="this.src='https://via.placeholder.com/40?text=GKY'">
@@ -188,7 +178,6 @@
       <button class="nav-link text-red-300 hover:text-red-100" onclick="handleLogout()" type="button"><i data-lucide="log-out" class="w-4 h-4"></i><span>Keluar</span></button>
      </nav>
     </aside>
-
     <main class="main-area">
      <header class="topbar">
       <div class="flex gap-3 items-center">
@@ -199,7 +188,6 @@
       </div>
       <button onclick="loadDataFromCloud()" class="secondary" style="width:auto; padding:7px 12px; font-size:12px;"><i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Sinkronisasi Data</button>
      </header>
-
      <!-- Dashboard View -->
      <section id="dashboard-view" class="view active">
       <div class="grid4">
@@ -221,7 +209,6 @@
        </aside>
       </div>
      </section>
-
      <!-- Members View -->
      <section id="members-view" class="view">
       <div class="panel">
@@ -255,7 +242,6 @@
        <p id="member-empty" class="empty hidden">Belum ada data anggota. Tambahkan anggota untuk memulai administrasi.</p>
       </div>
      </section>
-
      <!-- QR Attendance View -->
      <section id="qr-attendance-view" class="view">
       <div class="panel">
@@ -287,7 +273,6 @@
        </div>
       </div>
      </section>
-
      <!-- Attendance View -->
      <section id="attendance-view" class="view">
       <div class="panel">
@@ -313,7 +298,6 @@
        <p id="attendance-empty" class="empty hidden">Belum ada catatan kehadiran.</p>
       </div>
      </section>
-
      <!-- Visits View -->
      <section id="visits-view" class="view">
       <div class="panel mb-6">
@@ -327,7 +311,6 @@
         </button>
        </div>
       </div>
-
       <!-- Recap Section -->
       <div class="panel mb-6">
        <div class="flex justify-between gap-3 flex-wrap items-center border-b pb-3 mb-4">
@@ -353,7 +336,6 @@
          <select id="recap-year" class="field" style="width: auto;" onchange="renderVisits()"></select>
         </div>
        </div>
-
        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <div class="p-3 bg-slate-50 border rounded-lg text-center">
          <p class="text-xs text-slate-500 font-medium">Total Kunjungan Bulan Ini</p>
@@ -368,7 +350,6 @@
          <strong id="recap-followup-count" class="text-2xl text-red-600 block mt-1">0</strong>
         </div>
        </div>
-
        <div class="table-wrap">
         <table class="data-table">
          <thead>
@@ -388,7 +369,6 @@
        <p id="visit-recap-empty" class="empty hidden">Tidak ada data kunjungan pada bulan dan tahun yang dipilih.</p>
       </div>
      </section>
-
      <!-- Reports View -->
      <section id="reports-view" class="view">
       <div class="panel mb-4">
@@ -424,14 +404,12 @@
          </div>
         </div>
        </div>
-
        <div class="flex gap-2 mt-4 pt-3 border-t">
         <button onclick="exportReport('excel')" class="secondary" style="width:auto; padding:7px 14px; font-size:12px;"><i data-lucide="file-spreadsheet" class="w-4 h-4 text-green-600"></i> Unduh Excel (.csv)</button>
         <button onclick="exportReport('pdf')" class="secondary" style="width:auto; padding:7px 14px; font-size:12px;"><i data-lucide="file-text" class="w-4 h-4 text-red-600"></i> Unduh PDF</button>
         <button onclick="exportReport('word')" class="secondary" style="width:auto; padding:7px 14px; font-size:12px;"><i data-lucide="file-code" class="w-4 h-4 text-blue-600"></i> Unduh Word (.doc)</button>
        </div>
       </div>
-
       <div class="panel">
        <div id="report-print-area">
         <div class="text-center mb-4 border-b pb-2">
@@ -447,7 +425,6 @@
        </div>
       </div>
      </section>
-
      <!-- Settings View -->
      <section id="settings-view" class="view">
       <div class="settings-head flex justify-between items-center mb-4">
@@ -469,7 +446,6 @@
     </main>
    </div>
   </div>
-
   <!-- Modal Input Kunjungan -->
   <div id="visit-modal" class="modal-layer" role="dialog">
    <div class="modal">
@@ -526,7 +502,6 @@
     </form>
    </div>
   </div>
-
   <!-- Modal QR Code Generator -->
   <div id="qr-modal" class="modal-layer" role="dialog">
    <div class="modal text-center">
@@ -551,7 +526,6 @@
     </div>
    </div>
   </div>
-
   <!-- Modal Tambah / Edit Anggota -->
   <div id="member-modal" class="modal-layer" role="dialog">
    <div class="modal">
@@ -587,18 +561,15 @@
     </form>
    </div>
   </div>
-
   <div id="toast" class="toast" role="status">
    <i data-lucide="check-circle" class="w-4 h-4"></i><span id="toast-msg" style="color: #fff; font-weight: 700;">Perubahan berhasil disimpan.</span>
   </div>
-
   <script>
     const $ = id => document.getElementById(id);
     const DEFAULT_COMMISSIONS = ["Hamba Tuhan", "Anggota Jemaat", "Komisi Remaja", "Komisi Sekolah Minggu", "Komisi Alpha Course", "Komisi Wanita", "MOONCAKE"];
     
     // URL Web App Google Apps Script terbaru Anda
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4kZMOhZhKXtWGNyGnsUr9pNpyDXieuB7x0i5xRWJbTP1rzq7ZZsVEX8Y3K_gEGjer5A/exec";
-
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz-p6H4dEB4UDwjepf_53DA76kx8qPTYpSFQO9Y0aEm9tihBoF6RtxMPeYc24uYpCchvQ/exec";
     let records = [];
     let editingRecord = null;
     let editingVisitRecord = null;
@@ -606,25 +577,31 @@
 
     // Fungsi Mengambil Data dari Google Sheets Cloud
     async function loadDataFromCloud() {
-      showToast('Memuat data dari Google Sheets...');
+      showToast('Menyinkronkan data dari Google Sheets...');
       try {
-        const response = await fetch(SCRIPT_URL);
+        // Tambahkan timestamp agar tidak terkena cache browser
+        const urlWithCacheBust = `${SCRIPT_URL}${SCRIPT_URL.includes('?') ? '&' : '?'}t=${Date.now()}`;
+        const response = await fetch(urlWithCacheBust, { method: 'GET' });
         const result = await response.json();
-        if (result && Array.isArray(result.data)) {
+
+        if (result && result.status === 'success' && Array.isArray(result.data)) {
           records = result.data.map(item => {
-            if (item.dob && item.dob.includes('T')) {
-              item.dob = item.dob.split('T')[0];
+            if (item.dob && String(item.dob).includes('T')) {
+              item.dob = String(item.dob).split('T')[0];
+            }
+            if (item.date && String(item.date).includes('T')) {
+              item.date = String(item.date).split('T')[0];
             }
             return item;
           });
+          renderAll();
+          showToast('Data berhasil disinkronisasi!');
         } else {
-          records = [];
+          showToast('Gagal memuat data dari Google Sheets.');
         }
-        renderAll();
-        showToast('Data berhasil disinkronisasi!');
       } catch (err) {
         console.error('Gagal mengambil data:', err);
-        showToast('Gagal memuat dari Cloud.');
+        showToast('Gagal terhubung ke Google Sheets.');
       }
     }
 
@@ -635,19 +612,29 @@
           action: actionType,
           ...newData
         };
-
         const response = await fetch(SCRIPT_URL, {
           method: 'POST',
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(payload)
         });
-        
         const res = await response.json();
-        return res.status === "success";
+        return res && res.status === 'success';
       } catch (err) {
         console.error('Gagal kirim ke server:', err);
         return false;
       }
+    }
+
+    function parseYMD(dateStr) {
+      if (!dateStr) return null;
+      const match = String(dateStr).trim().match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (!match) return null;
+      return {
+        year: parseInt(match[1], 10),
+        month: parseInt(match[2], 10) - 1, // 0-11
+        day: parseInt(match[3], 10),
+        formatted: `${match[1]}-${match[2]}-${match[3]}`
+      };
     }
 
     const members = () => records.filter(r => r.record_type === "member");
@@ -668,7 +655,6 @@
         $('tab-register-btn').className = "flex-1 py-1.5 text-xs font-bold rounded bg-amber-500 text-white transition";
       }
     }
-
     function handleLogin(e) {
       e.preventDefault();
       $('welcome').style.display = 'none';
@@ -676,19 +662,16 @@
       showToast('Berhasil masuk ke sistem');
       loadDataFromCloud();
     }
-
     function handleRegister(e) {
       e.preventDefault();
       showToast('Akun berhasil dibuat, silakan login!');
       switchAuthTab('login');
     }
-
     function handleLogout() {
       $('dashboard').classList.remove('active');
       $('welcome').style.display = 'flex';
       showToast('Anda telah keluar');
     }
-
     function toggleSidebar() {
       $('sidebar').classList.toggle('open');
     }
@@ -696,7 +679,6 @@
     // Modal Manager
     function openModal(id) { $(id).classList.add('show'); }
     function closeModal(id) { $(id).classList.remove('show'); }
-
     function showToast(msg) {
       $('toast-msg').innerText = msg;
       $('toast').classList.add('show');
@@ -710,7 +692,6 @@
       $('member-form').reset();
       openModal('member-modal');
     }
-
     function openEditMemberModal(id) {
       editingRecord = records.find(r => r.__backendId === id);
       if(!editingRecord) return;
@@ -724,7 +705,6 @@
       $('m-address').value = editingRecord.address || '';
       openModal('member-modal');
     }
-
     async function handleSaveMember(e) {
       e.preventDefault();
       const data = {
@@ -738,11 +718,10 @@
         status: $('m-status').value,
         address: $('m-address').value
       };
-
       showToast('Menyimpan ke Google Sheets...');
       const success = await saveDataToCloud(data, editingRecord ? 'edit_anggota' : 'tambah_anggota');
       
-      if(success || true) {
+      if(success) {
         if(editingRecord) {
           Object.assign(editingRecord, data);
         } else {
@@ -755,13 +734,16 @@
         showToast('Gagal menyimpan ke server.');
       }
     }
-
     async function deleteMember(id) {
       if(confirm('Apakah Anda yakin ingin menghapus anggota ini?')) {
-        await saveDataToCloud({ __backendId: id }, 'hapus_anggota');
-        records = records.filter(r => r.__backendId !== id);
-        renderAll();
-        showToast('Anggota berhasil dihapus');
+        const success = await saveDataToCloud({ __backendId: id }, 'hapus_anggota');
+        if(success) {
+          records = records.filter(r => r.__backendId !== id);
+          renderAll();
+          showToast('Anggota berhasil dihapus');
+        } else {
+          showToast('Gagal menghapus data di Google Sheets.');
+        }
       }
     }
 
@@ -773,17 +755,20 @@
       $('qr-member-details').innerText = `${m.commission} • ${m.phone || 'No Telp (-)'}`;
       $('qrcode-container').innerHTML = '';
       
-      const qrcode = new QRCode($('qrcode-container'), {
+      new QRCode($('qrcode-container'), {
         text: m.__backendId,
         width: 160,
         height: 160
       });
-
       setTimeout(() => {
+        const canvas = $('qrcode-container').querySelector('canvas');
         const img = $('qrcode-container').querySelector('img');
-        if(img) $('download-qr-btn').href = img.src;
-      }, 300);
-
+        const dataUrl = canvas ? canvas.toDataURL('image/png') : (img ? img.src : '');
+        if(dataUrl) {
+          $('download-qr-btn').href = dataUrl;
+          $('download-qr-btn').download = `QR-${m.name.replace(/\s+/g, '_')}.png`;
+        }
+      }, 150);
       openModal('qr-modal');
     }
 
@@ -794,7 +779,6 @@
       populateVisitMemberSelect();
       openModal('visit-modal');
     }
-
     function populateVisitMemberSelect() {
       const sel = $('v-member-name');
       sel.innerHTML = '<option value="">-- Pilih Anggota --</option>';
@@ -802,34 +786,50 @@
         sel.innerHTML += `<option value="${m.name}">${m.name} (${m.commission})</option>`;
       });
     }
-
     async function handleSaveVisit(e) {
       e.preventDefault();
+      const rawDate = $('v-date').value;
       const data = {
         record_type: 'visit',
         __backendId: 'VISIT-' + Date.now(),
         member_name: $('v-member-name').value,
-        date: $('v-date').value,
+        date: rawDate,
         visitor: $('v-visitor').value,
         purpose: $('v-purpose').value,
         status: $('v-status').value,
         notes: $('v-notes').value
       };
 
-      showToast('Menyimpan kunjungan...');
-      await saveDataToCloud(data, 'tambah_kunjungan');
+      showToast('Menyimpan kunjungan ke Sheet 2...');
+      const ok = await saveDataToCloud(data, 'tambah_kunjungan');
+      if (!ok) {
+        showToast('Gagal menyimpan kunjungan ke Google Sheets!');
+        return;
+      }
+
       records.push(data);
+
+      // Samakan bulan & tahun rekap dengan tanggal kunjungan yang baru diinput
+      const parsed = parseYMD(rawDate);
+      if (parsed) {
+        $('recap-month').value = String(parsed.month);
+        $('recap-year').value = String(parsed.year);
+      }
+
       renderAll();
       closeModal('visit-modal');
-      showToast('Kunjungan berhasil dicatat ke Google Sheets');
+      showToast('Kunjungan berhasil tersinkron ke Google Sheets!');
     }
-
     async function deleteVisit(id) {
       if(confirm('Hapus catatan kunjungan ini?')) {
-        await saveDataToCloud({ __backendId: id }, 'hapus_kunjungan');
-        records = records.filter(r => r.__backendId !== id);
-        renderAll();
-        showToast('Catatan kunjungan dihapus');
+        const success = await saveDataToCloud({ __backendId: id }, 'hapus_kunjungan');
+        if(success) {
+          records = records.filter(r => r.__backendId !== id);
+          renderAll();
+          showToast('Catatan kunjungan dihapus');
+        } else {
+          showToast('Gagal menghapus catatan kunjungan di Google Sheets.');
+        }
       }
     }
 
@@ -850,16 +850,19 @@
             time: new Date().toLocaleTimeString('id-ID')
           };
           
-          await saveDataToCloud(att, 'tambah_absen');
-          records.push(att);
-          renderAll();
-
-          $('scan-result-box').innerHTML = `
-            <div class="text-green-600 font-bold">✓ Absensi Berhasil Disimpan!</div>
-            <div class="font-bold text-slate-800 text-base">${member.name}</div>
-            <div class="text-xs text-slate-500">${att.service} • ${att.time}</div>
-          `;
-          showToast(`Berhasil absen: ${member.name}`);
+          const ok = await saveDataToCloud(att, 'tambah_absen');
+          if (ok) {
+            records.push(att);
+            renderAll();
+            $('scan-result-box').innerHTML = `
+              <div class="text-green-600 font-bold">✓ Absensi Berhasil Disimpan!</div>
+              <div class="font-bold text-slate-800 text-base">${member.name}</div>
+              <div class="text-xs text-slate-500">${att.service} • ${att.time}</div>
+            `;
+            showToast(`Berhasil absen: ${member.name}`);
+          } else {
+            showToast('Gagal menyimpan absensi ke Google Sheets.');
+          }
         } else {
           $('scan-result-box').innerHTML = `<div class="text-red-500 font-bold">QR Code tidak terdaftar di database!</div>`;
         }
@@ -877,7 +880,6 @@
         const matchComm = !comm || m.commission === comm;
         return matchQ && matchComm;
       });
-
       body.innerHTML = filtered.map(m => `
         <tr>
           <td><strong>${m.name}</strong></td>
@@ -893,35 +895,38 @@
           </td>
         </tr>
       `).join('');
-
       $('member-empty').classList.toggle('hidden', filtered.length > 0);
     }
 
     function renderVisits() {
-      const mVal = parseInt($('recap-month').value);
-      const yVal = parseInt($('recap-year').value);
+      const mVal = parseInt($('recap-month').value, 10);
+      const yVal = parseInt($('recap-year').value, 10);
 
       const filtered = visits().filter(v => {
-        if(!v.date) return false;
-        const d = new Date(v.date);
-        return d.getMonth() === mVal && d.getFullYear() === yVal;
+        const p = parseYMD(v.date);
+        if (!p) return false;
+        return p.month === mVal && p.year === yVal;
       });
 
       $('recap-count').innerText = filtered.length;
       $('recap-unique-members').innerText = new Set(filtered.map(f => f.member_name)).size;
       $('recap-followup-count').innerText = filtered.filter(f => f.status !== 'Selesai').length;
 
-      $('visit-recap-body').innerHTML = filtered.map(v => `
-        <tr>
-          <td><strong>${v.member_name}</strong></td>
-          <td>${v.date}</td>
-          <td>${v.visitor}</td>
-          <td>${v.purpose}</td>
-          <td>${v.notes || '-'}</td>
-          <td><span class="status">${v.status}</span></td>
-          <td><button class="link-btn danger" onclick="deleteVisit('${v.__backendId}')">Hapus</button></td>
-        </tr>
-      `).join('');
+      $('visit-recap-body').innerHTML = filtered.map(v => {
+        const p = parseYMD(v.date);
+        const tgl = p ? p.formatted : (v.date || '-');
+        return `
+          <tr>
+            <td><strong>${v.member_name}</strong></td>
+            <td>${tgl}</td>
+            <td>${v.visitor}</td>
+            <td>${v.purpose}</td>
+            <td>${v.notes || '-'}</td>
+            <td><span class="status">${v.status}</span></td>
+            <td><button class="link-btn danger" onclick="deleteVisit('${v.__backendId}')">Hapus</button></td>
+          </tr>
+        `;
+      }).join('');
 
       $('visit-recap-empty').classList.toggle('hidden', filtered.length > 0);
     }
@@ -942,7 +947,8 @@
 
     function toggleReportFilters() {
       const p = $('rpt-period').value;
-      $('rpt-filter-date').classList.toggle('hidden', p !== 'weekly');$('rpt-filter-month').classList.toggle('hidden', p === 'weekly');
+      $('rpt-filter-date').classList.toggle('hidden', p !== 'weekly');
+      $('rpt-filter-month').classList.toggle('hidden', p === 'weekly');
     }
 
     function generateReport() {
@@ -953,7 +959,6 @@
       
       let filteredData = [];
       let title = "";
-
       if(category === 'attendance') {
         title = "Laporan Rekapitulasi Kehadiran Jemaat";
         filteredData = attendances().filter(a => filterByPeriod(a.date, period));
@@ -964,10 +969,8 @@
         title = "Laporan Database Anggota Jemaat";
         filteredData = members();
       }
-
       $('rpt-header-title').innerText = title;
       $('rpt-header-sub').innerText = `Tipe Laporan: ${period.toUpperCase()} | Total Data: ${filteredData.length}`;
-
       if(category === 'attendance') {
         head.innerHTML = `<tr><th>No</th><th>Tanggal</th><th>Nama Jemaat</th><th>Layanan</th><th>Waktu Absen</th></tr>`;
         body.innerHTML = filteredData.map((d, i) => `
@@ -987,20 +990,25 @@
     }
 
     function filterByPeriod(dateStr, period) {
-      if(!dateStr) return false;
-      const d = new Date(dateStr);
+      const p = parseYMD(dateStr);
+      if (!p) return false;
+      const d = new Date(p.year, p.month, p.day);
       if(period === 'weekly') {
-        const start = $('rpt-start-date').value ? new Date($('rpt-start-date').value) : new Date(Date.now() - 7*24*60*60*1000);
+        const startStr = $('rpt-start-date').value;
+        const startParsed = parseYMD(startStr);
+        const start = startParsed
+          ? new Date(startParsed.year, startParsed.month, startParsed.day)
+          : new Date(Date.now() - 7*24*60*60*1000);
         const end = new Date(start);
         end.setDate(end.getDate() + 7);
         return d >= start && d <= end;
       } else if(period === 'monthly') {
-        const m = parseInt($('rpt-month').value);
-        const y = parseInt($('rpt-year').value);
-        return d.getMonth() === m && d.getFullYear() === y;
+        const m = parseInt($('rpt-month').value, 10);
+        const y = parseInt($('rpt-year').value, 10);
+        return p.month === m && p.year === y;
       } else if(period === 'yearly') {
-        const y = parseInt($('rpt-year').value);
-        return d.getFullYear() === y;
+        const y = parseInt($('rpt-year').value, 10);
+        return p.year === y;
       }
       return true;
     }
@@ -1008,7 +1016,6 @@
     function exportReport(type) {
       const table = $('report-table');
       const title = $('rpt-header-title').innerText;
-
       if (type === 'excel') {
         let csv = [];
         for (let row of table.rows) {
@@ -1037,16 +1044,26 @@
       }
     }
 
+    function saveChurchProfile(e) {
+      e.preventDefault();
+      const fullName = $('church-full-name').value.trim();
+      if (fullName) {
+        $('church-name-side').innerText = fullName;
+      }
+      showToast('Profil gereja berhasil diperbarui!');
+    }
+
     function setupReportFilters() {
       const months = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
       const rptM = $('rpt-month');
       const rptY = $('rpt-year');
+      const recapM = $('recap-month');
       const recapY = $('recap-year');
       
       const currentYear = new Date().getFullYear();
       const currentMonth = new Date().getMonth();
-
       rptM.innerHTML = months.map((m, i) => `<option value="${i}" ${i===currentMonth?'selected':''}>${m}</option>`).join('');
+      recapM.value = String(currentMonth);
       
       let yearOpts = '';
       for(let y = currentYear - 3; y <= currentYear + 2; y++) {
@@ -1062,12 +1079,10 @@
       $('metric-commissions').innerText = DEFAULT_COMMISSIONS.length;
       $('metric-attendance').innerText = attendances().length;
       $('metric-visits').innerText = visits().length;
-
       $('commission-cards').innerHTML = DEFAULT_COMMISSIONS.map(c => {
         const count = members().filter(m => m.commission === c).length;
         return `<div class="card bg-slate-50 border text-center p-3"><p class="text-xs text-slate-500 font-bold">${c}</p><strong class="text-xl text-slate-800">${count}</strong></div>`;
       }).join('');
-
       renderMembers();
       renderVisits();
       renderAttendance();
@@ -1076,7 +1091,6 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       setupReportFilters();
-
       const mComm = $('m-commission');
       const filterComm = $('member-commission-filter');
       
@@ -1085,7 +1099,6 @@
         mComm.innerHTML += `<option value="${c}">${c}</option>`;
         filterComm.innerHTML += `<option value="${c}">${c}</option>`;
       });
-
       document.querySelectorAll('.nav-link[data-view]').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
@@ -1093,13 +1106,12 @@
           
           btn.classList.add('active');
           const viewId = btn.getAttribute('data-view');
-          $(viewId).classList.add('active');$('page-heading-title').innerText = btn.querySelector('span').innerText;
-
+          $(viewId).classList.add('active');
+          $('page-heading-title').innerText = btn.querySelector('span').innerText;
           if(window.innerWidth <= 820) $('sidebar').classList.remove('open');
           if(viewId === 'reports-view') generateReport();
         });
       });
-
       lucide.createIcons();
       loadDataFromCloud();
     });
